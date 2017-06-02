@@ -23,9 +23,12 @@ public class UserServiceTest {
 
     @Test
     public void getUsers(){
-        List<User> userList = userService.findAll();
-        Assert.assertNotNull(userList);
-        Assert.assertTrue(userList.size()>0);
+        List<User> users = userService.findAll();
+        Assert.assertNotNull(users);
+        Assert.assertTrue(users.size()>0);
+        for(User user : users){
+            System.out.println("\n\n\n"+ userService.findById(user.getUsername()));
+        }
     }
 
 }

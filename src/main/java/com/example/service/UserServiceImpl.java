@@ -1,9 +1,10 @@
 package com.example.service;
 
+import com.example.domain.User;
 import com.example.repository.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,7 +19,17 @@ public class UserServiceImpl implements UserService{
     UserRepository userRepository;
 
     @Override
-    public List<com.example.domain.User> findAll() {
+    @Transactional(readOnly = true)
+    public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User findById(String username) {
+        User user = userRepository.findOne(username);
+        //have to touch entry to get lazyloading to load
+        user.getEntries().size();
+        return user;
     }
 }

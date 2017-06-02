@@ -1,16 +1,15 @@
 package com.example.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by bsheen on 6/2/17.
  */
 
 @Entity
-@Table(name="users")
+@Table(name="user")
 public class User {
     private String username;
     private String password;
@@ -20,6 +19,7 @@ public class User {
     private String insulinType;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private List<Entry> entries;
 
     @Id
     public String getUsername() {
@@ -86,6 +86,15 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    public List<Entry> getEntries() {
+        return entries;
+    }
+
+    public void setEntries(List<Entry> entries) {
+        this.entries = entries;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,6 +121,7 @@ public class User {
                 ", insulinType='" + insulinType + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", entries=" + entries +
                 '}';
     }
 }

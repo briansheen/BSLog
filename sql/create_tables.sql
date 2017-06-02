@@ -1,5 +1,5 @@
 
-CREATE TABLE `users` (
+CREATE TABLE `user` (
   `username` varchar(256) NOT NULL,
   `password` varchar(256) NOT NULL,
   `enabled` tinyint(1) DEFAULT NULL,
@@ -19,11 +19,11 @@ CREATE TABLE `authorities` (
 
 CREATE TABLE `entry` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` varchar(256) NOT NULL,
+  `date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `username` varchar(256) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_entry_user` (`user_id`),
-  CONSTRAINT `fk_entry_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`username`)
+  KEY `fk_entry_user` (`username`),
+  CONSTRAINT `fk_entry_user` FOREIGN KEY (`username`) REFERENCES `user` (`username`)
 );
 
 CREATE TABLE `carbs` (
@@ -57,11 +57,11 @@ CREATE TABLE `insulin` (
   CONSTRAINT `fk_insulin_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`id`)
 );
 
-insert into users (username, password, enabled, icr, isr) values ('brian','sheen',true,10,40);
+insert into user (username, password, enabled, icr, isr) values ('brian','sheen',true,10,40);
 
 insert into authorities (username, authority) values ('brian', 'ROLE_USER');
 
-insert into users (username, password, enabled) values ('admin','admin',true);
+insert into user (username, password, enabled) values ('admin','admin',true);
 
 insert into authorities (username, authority) values ('admin', 'ROLE_ADMIN');
 
