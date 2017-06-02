@@ -7,7 +7,7 @@ CREATE TABLE `users` (
   `icr` int(11) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL,
-  `insulintype` varchar(30) DEFAULT NULL,
+  `insulin_type` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`username`)
 );
 
