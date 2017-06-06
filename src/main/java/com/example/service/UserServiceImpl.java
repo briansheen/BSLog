@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.domain.Entry;
 import com.example.domain.User;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,18 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional(readOnly = true)
-    public User findById(String username) {
+    public User findByUsername(String username) {
         User user = userRepository.findOne(username);
         //have to touch entry to get lazyloading to load
         user.getEntries().size();
+        for (Entry entry : user.getEntries()) {
+            entry.getCarbs().size();
+        }
         return user;
+    }
+
+    @Override
+    public User addUser(User user) {
+        return userRepository.save(user);
     }
 }

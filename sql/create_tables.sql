@@ -18,43 +18,43 @@ CREATE TABLE `authorities` (
 );
 
 CREATE TABLE `entry` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `eid` int(11) NOT NULL AUTO_INCREMENT,
   `date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `username` varchar(256) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`eid`),
   KEY `fk_entry_user` (`username`),
   CONSTRAINT `fk_entry_user` FOREIGN KEY (`username`) REFERENCES `user` (`username`)
 );
 
-CREATE TABLE `carbs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `carb` (
+  `cid` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) DEFAULT NULL,
-  `servingsize` varchar(30) DEFAULT NULL,
-  `carbsperserving` int(11) DEFAULT NULL,
-  `numservings` int(11) DEFAULT NULL,
-  `totalcarbs` int(11) NOT NULL,
+  `serving_size` varchar(30) DEFAULT NULL,
+  `carbs_per_serving` int(11) DEFAULT NULL,
+  `num_servings` int(11) DEFAULT NULL,
+  `total_carbs` int(11) DEFAULT NULL,
   `entry_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`cid`),
   KEY `fk_carbs_entry` (`entry_id`),
-  CONSTRAINT `fk_carbs_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`id`)
+  CONSTRAINT `fk_carbs_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`eid`)
 );
 
 CREATE TABLE `bloodsugar` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bsid` int(11) NOT NULL AUTO_INCREMENT,
   `bloodsugar` int(11) NOT NULL,
   `entry_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`bsid`),
   UNIQUE KEY `entry_id` (`entry_id`),
-  CONSTRAINT `fk_bloodsugar_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`id`)
+  CONSTRAINT `fk_bloodsugar_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`eid`)
 );
 
 CREATE TABLE `insulin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `iid` int(11) NOT NULL AUTO_INCREMENT,
   `insulin` double DEFAULT NULL,
   `entry_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`iid`),
   UNIQUE KEY `entry_id` (`entry_id`),
-  CONSTRAINT `fk_insulin_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`id`)
+  CONSTRAINT `fk_insulin_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`eid`)
 );
 
 insert into user (username, password, enabled, icr, isr) values ('brian','sheen',true,10,40);

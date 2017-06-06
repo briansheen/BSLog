@@ -2,6 +2,7 @@ package com.example.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by bsheen on 6/1/17.
@@ -9,20 +10,20 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="entry")
-
 public class Entry {
-    private Integer id;
+    private Integer eid;
     private LocalDateTime dateTime;
-    private User user;
+    private User user; //for the user username
+    private List<Carb> carbs;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer getId() {
-        return id;
+    public Integer getEid() {
+        return eid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setEid(Integer eid) {
+        this.eid = eid;
     }
 
     public LocalDateTime getDateTime() {
@@ -43,6 +44,15 @@ public class Entry {
         this.user = user;
     }
 
+    @OneToMany(mappedBy = "entry", fetch = FetchType.LAZY)
+    public List<Carb> getCarbs() {
+        return carbs;
+    }
+
+    public void setCarbs(List<Carb> carbs) {
+        this.carbs = carbs;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,19 +60,22 @@ public class Entry {
 
         Entry entry = (Entry) o;
 
-        return id.equals(entry.id);
+        return eid.equals(entry.eid);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return eid.hashCode();
     }
+
 
     @Override
     public String toString() {
         return "Entry{" +
-                "id=" + id +
+                "eid=" + eid +
                 ", dateTime=" + dateTime +
+                ", user=" + (user == null ? "" : user.getUsername()) +
+                ", carbs=" + carbs +
                 '}';
     }
 }
