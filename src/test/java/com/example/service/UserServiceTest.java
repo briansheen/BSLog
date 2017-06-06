@@ -2,7 +2,9 @@ package com.example.service;
 
 import com.example.domain.Carb;
 import com.example.domain.Entry;
+import com.example.domain.Insulin;
 import com.example.domain.User;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +32,9 @@ public class UserServiceTest {
 
     @Autowired
     CarbService carbService;
+
+    @Autowired
+    InsulinService insulinService;
 
     @Test
     public void getUsers(){
@@ -93,8 +98,6 @@ public class UserServiceTest {
         entry.setUser(user);
         entryService.addEntry(entry);
 
-        System.out.println(entry);
-
         Carb carb = new Carb();
         carb.setTotalCarbs(15);
         carb.setEntry(entry);
@@ -105,8 +108,6 @@ public class UserServiceTest {
         carb2.setEntry(entry);
         carbService.addCarb(carb2);
 
-        entryService.updateEntry(entry);
-
         User user2 = userService.findByUsername(username);
 
         Assert.assertNotNull(user2.getEntries().get(0).getCarbs());
@@ -114,7 +115,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void addBloodSugar(){
+    public void addInsulin(){
         User user = new User();
         user.setCreatedAt(LocalDateTime.now());
         user.setEnabled(true);
@@ -129,9 +130,15 @@ public class UserServiceTest {
         entry.setUser(user);
         entryService.addEntry(entry);
 
+        Insulin insulin = new Insulin();
+        insulin.setInsulin(2.3);
+        insulin.setEntry(entry);
+        insulinService.addInsulin(insulin);
+
         User user2 = userService.findByUsername(username);
 
-        //add bloodsugar stuff
+        Assert.assertNotNull(user2.getEntries().get(0).getInsulin());
+        Assert.assertTrue(user2.getEntries().get(0).getInsulin().getInsulin()==2.3);
     }
 
 }

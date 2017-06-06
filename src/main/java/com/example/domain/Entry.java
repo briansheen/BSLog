@@ -15,6 +15,7 @@ public class Entry {
     private LocalDateTime dateTime;
     private User user; //for the user username
     private List<Carb> carbs;
+    private Insulin insulin;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,6 +52,15 @@ public class Entry {
 
     public void setCarbs(List<Carb> carbs) {
         this.carbs = carbs;
+    }
+
+    @OneToOne(mappedBy = "entry", fetch = FetchType.LAZY)
+    public Insulin getInsulin() {
+        return insulin;
+    }
+
+    public void setInsulin(Insulin insulin) {
+        this.insulin = insulin;
     }
 
     @Override

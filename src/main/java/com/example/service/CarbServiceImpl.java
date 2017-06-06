@@ -25,6 +25,7 @@ public class CarbServiceImpl implements CarbService {
     }
 
     @Override
+    @Transactional
     public Carb addCarb(Carb carb) {
         return carbRepository.save(carb);
     }

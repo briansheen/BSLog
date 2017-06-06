@@ -26,17 +26,20 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    @Transactional
     public Entry addEntry(Entry entry) {
         return entryRepository.save(entry);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Entry findEntry(Integer eid) {
         Entry entry = entryRepository.findOne(eid);
         return entry;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Entry updateEntry(Entry entry) {
         return entryRepository.save(entry);
     }
