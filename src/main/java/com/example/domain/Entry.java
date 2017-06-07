@@ -16,6 +16,7 @@ public class Entry {
     private User user; //for the user username
     private List<Carb> carbs;
     private Insulin insulin;
+    private Bloodsugar bloodsugar;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -63,6 +64,15 @@ public class Entry {
         this.insulin = insulin;
     }
 
+    @OneToOne(mappedBy = "entry", fetch = FetchType.LAZY)
+    public Bloodsugar getBloodsugar() {
+        return bloodsugar;
+    }
+
+    public void setBloodsugar(Bloodsugar bloodsugar) {
+        this.bloodsugar = bloodsugar;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,7 +88,7 @@ public class Entry {
         return eid.hashCode();
     }
 
-
+    //TODO UPDATE TOSTRING
     @Override
     public String toString() {
         return "Entry{" +

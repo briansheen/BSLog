@@ -7,28 +7,28 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name="insulin")
-public class Insulin {
-    private Integer iid;
-    private Double insulin;
+@Table(name="bloodsugar")
+public class Bloodsugar {
+    private Integer bsid;
+    private Integer bloodsugar;
     private Entry entry;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer getIid() {
-        return iid;
+    public Integer getBsid() {
+        return bsid;
     }
 
-    public void setIid(Integer iid) {
-        this.iid = iid;
+    public void setBsid(Integer bsid) {
+        this.bsid = bsid;
     }
 
-    public Double getInsulin() {
-        return insulin;
+    public Integer getBloodsugar() {
+        return bloodsugar;
     }
 
-    public void setInsulin(Double insulin) {
-        this.insulin = insulin;
+    public void setBloodsugar(Integer bloodsugar) {
+        this.bloodsugar = bloodsugar;
     }
 
     @OneToOne
@@ -46,21 +46,21 @@ public class Insulin {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Insulin insulin = (Insulin) o;
+        Bloodsugar that = (Bloodsugar) o;
 
-        return iid.equals(insulin.iid);
+        return bsid.equals(that.bsid);
     }
 
     @Override
     public int hashCode() {
-        return iid.hashCode();
+        return bsid.hashCode();
     }
 
     @Override
     public String toString() {
-        return "Insulin{" +
-                "iid=" + iid +
-                ", insulin=" + insulin +
+        return "Bloodsugar{" +
+                "bsid=" + bsid +
+                ", bloodsugar=" + bloodsugar +
                 ", entry=" + (entry == null ? "" : entry.getEid()) +
                 '}';
     }

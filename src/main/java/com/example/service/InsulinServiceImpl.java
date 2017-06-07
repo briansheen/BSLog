@@ -21,7 +21,7 @@ public class InsulinServiceImpl implements InsulinService {
     @Override
     @Transactional(readOnly = true)
     public List<Insulin> findAll() {
-        return null;
+        return insulinRepository.findAll();
     }
 
     @Override

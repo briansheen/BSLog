@@ -1,9 +1,6 @@
 package com.example.service;
 
-import com.example.domain.Carb;
-import com.example.domain.Entry;
-import com.example.domain.Insulin;
-import com.example.domain.User;
+import com.example.domain.*;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,18 +33,21 @@ public class UserServiceTest {
     @Autowired
     InsulinService insulinService;
 
+    @Autowired
+    BloodsugarService bloodsugarService;
+
     @Test
-    public void getUsers(){
+    public void getUsers() {
         List<User> users = userService.findAll();
         Assert.assertNotNull(users);
-        Assert.assertTrue(users.size()>0);
-        for(User user : users){
-            System.out.println("\n\n\n"+ userService.findByUsername(user.getUsername()));
+        Assert.assertTrue(users.size() > 0);
+        for (User user : users) {
+            System.out.println("\n\n\n" + userService.findByUsername(user.getUsername()));
         }
     }
 
     @Test
-    public void addUser(){
+    public void addUser() {
         User user = new User();
         user.setCreatedAt(LocalDateTime.now());
         user.setEnabled(true);
@@ -60,7 +60,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void addEntry(){
+    public void addEntry() {
         User user = new User();
         user.setCreatedAt(LocalDateTime.now());
         user.setEnabled(true);
@@ -83,7 +83,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void addCarb(){
+    public void addCarb() {
         User user = new User();
         user.setCreatedAt(LocalDateTime.now());
         user.setEnabled(true);
@@ -111,11 +111,11 @@ public class UserServiceTest {
         User user2 = userService.findByUsername(username);
 
         Assert.assertNotNull(user2.getEntries().get(0).getCarbs());
-        Assert.assertTrue(user2.getEntries().get(0).getCarbs().size()==2);
+        Assert.assertTrue(user2.getEntries().get(0).getCarbs().size() == 2);
     }
 
     @Test
-    public void addInsulin(){
+    public void addInsulin() {
         User user = new User();
         user.setCreatedAt(LocalDateTime.now());
         user.setEnabled(true);
@@ -138,7 +138,34 @@ public class UserServiceTest {
         User user2 = userService.findByUsername(username);
 
         Assert.assertNotNull(user2.getEntries().get(0).getInsulin());
-        Assert.assertTrue(user2.getEntries().get(0).getInsulin().getInsulin()==2.3);
+        Assert.assertTrue(user2.getEntries().get(0).getInsulin().getInsulin() == 2.3);
+    }
+
+    @Test
+    public void addBloodsugar() {
+        User user = new User();
+        user.setCreatedAt(LocalDateTime.now());
+        user.setEnabled(true);
+        String username = Long.toString(System.currentTimeMillis());
+        user.setUsername(username);
+        user.setPassword("password");
+        userService.addUser(user);
+
+        Entry entry = new Entry();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        entry.setDateTime(localDateTime);
+        entry.setUser(user);
+        entryService.addEntry(entry);
+
+        Bloodsugar bloodsugar = new Bloodsugar();
+        bloodsugar.setBloodsugar(165);
+        bloodsugar.setEntry(entry);
+        bloodsugarService.addBloodsugar(bloodsugar);
+
+        User user2 = userService.findByUsername(username);
+
+        Assert.assertNotNull(user2.getEntries().get(0).getBloodsugar());
+        Assert.assertTrue(user2.getEntries().get(0).getBloodsugar().getBloodsugar() == 165);
     }
 
 }
