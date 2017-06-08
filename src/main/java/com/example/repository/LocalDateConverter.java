@@ -12,25 +12,25 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter(autoApply = true)
-public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime, Timestamp> {
+public class LocalDateConverter implements AttributeConverter<LocalDate, Date> {
 
     @Override
-    public Timestamp convertToDatabaseColumn(LocalDateTime locDateTime) {
-        if(locDateTime == null){
+    public Date convertToDatabaseColumn(LocalDate locDate) {
+        if(locDate == null){
             return null;
         }
 //        java.util.Date date = java.util.Date.from(locDateTime.atZone(ZoneId.systemDefault()).toInstant());
 
 //        return new java.sql.Timestamp(date.getTime());
-        return Timestamp.valueOf(locDateTime);
+        return Date.valueOf(locDate);
     }
 
     @Override
-    public LocalDateTime convertToEntityAttribute(Timestamp sqlTimestamp) {
-        if(sqlTimestamp ==  null){
+    public LocalDate convertToEntityAttribute(Date sqlDate) {
+        if(sqlDate ==  null){
             return null;
         }
-        return sqlTimestamp.toLocalDateTime();
+        return sqlDate.toLocalDate();
 //        java.util.Date date = new java.util.Date(sqlTimestamp.getTime());
 //        return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
     }

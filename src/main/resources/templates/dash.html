@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -29,7 +29,7 @@
             </thead>
             <tbody>
             <tr>
-                <td><a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/bloodsugar.html"><input type="button" value="Add Blood Sugar / Carbohydrates"/></a></td>
+                <td><a href="/addEntry"><input type="button" value="Add Entry"/></a></td>
                 <td><a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/getbolus.html"><input type="button" value="Get Insulin Bolus"/></a></td>
             </tr>
             </tbody>
@@ -37,6 +37,7 @@
     </div>
 </div>
 <br/>
+<form action="#" th:action="@{/dash}" th:object="${entryList}" method="post">
 <div class="text-center">
     <h2>My Daily Summary: May 30, 2017</h2>
     <h3>My Estimated HbA1c: 7.2</h3>
@@ -52,40 +53,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>9:07 AM</td>
-                <td>127 mg/dL</td>
-                <td>53 g</td>
-                <td>5.9 units</td>
-            </tr>
-            <tr>
-                <td>11:49 AM</td>
-                <td>89 mg/dL</td>
-                <td>74 g</td>
-                <td>7.2 units</td>
-            </tr>
-            <tr>
-                <td>2:21 PM</td>
-                <td>186 mg/dL</td>
-                <td>0 g</td>
-                <td>2.1 units</td>
-            </tr>
-            <tr>
-                <td>6:37 PM</td>
-                <td>94 mg/dL</td>
-                <td>0 g</td>
-                <td>0 units</td>
-            </tr>
-            <tr>
-                <td>10:01 PM</td>
-                <td>58 mg/dL</td>
-                <td>13 g</td>
-                <td>0 units</td>
+            <tr th:each="entry : ${entryList}">
+                <td th:text="${entry.dateTime}"></td>
+                <td th:text="${entry.bloodsugar}"></td>
+                <td th:text="${entry.carbs}"></td>
+                <td th:text="${entry.insulin}"></td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
+</form>
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
         crossorigin="anonymous"></script>

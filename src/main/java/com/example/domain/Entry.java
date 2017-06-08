@@ -1,7 +1,9 @@
 package com.example.domain;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -11,8 +13,10 @@ import java.util.List;
 @Entity
 @Table(name="entry")
 public class Entry {
+
     private Integer eid;
-    private LocalDateTime dateTime;
+    private LocalDate date;
+    private LocalTime time;
     private User user; //for the user username
     private List<Carb> carbs;
     private Insulin insulin;
@@ -28,12 +32,20 @@ public class Entry {
         this.eid = eid;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
     @ManyToOne()
@@ -80,22 +92,24 @@ public class Entry {
 
         Entry entry = (Entry) o;
 
-        return eid.equals(entry.eid);
+        return eid != null ? eid.equals(entry.eid) : entry.eid == null;
     }
 
     @Override
     public int hashCode() {
-        return eid.hashCode();
+        return eid != null ? eid.hashCode() : 0;
     }
 
-    //TODO UPDATE TOSTRING
     @Override
     public String toString() {
         return "Entry{" +
                 "eid=" + eid +
-                ", dateTime=" + dateTime +
+                ", date=" + date +
+                ", time=" + time +
                 ", user=" + (user == null ? "" : user.getUsername()) +
                 ", carbs=" + carbs +
+                ", insulin=" + insulin +
+                ", bloodsugar=" + bloodsugar +
                 '}';
     }
 }

@@ -19,7 +19,8 @@ CREATE TABLE `authorities` (
 
 CREATE TABLE `entry` (
   `eid` int(11) NOT NULL AUTO_INCREMENT,
-  `date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
   `username` varchar(256) NOT NULL,
   PRIMARY KEY (`eid`),
   KEY `fk_entry_user` (`username`),
