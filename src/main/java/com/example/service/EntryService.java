@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.domain.Entry;
+import com.example.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -16,5 +17,7 @@ public interface EntryService {
     public Entry findEntry(Integer eid);
 
     public Entry updateEntry(Entry entry);
+
+    public List<Entry> getTotCarbPerEntryByUser(User user);
 
 }

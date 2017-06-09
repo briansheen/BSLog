@@ -11,35 +11,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css" rel="stylesheet" />
 </head>
 <body>
-<a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/dash.html"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
+<a href="/dash"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
 <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/profile.html"><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></a>
 <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/history.html"><input type="button" value="My History"/></a>
 <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/report.html"><input type="button" value="My Report"/></a>
 <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/logout.html"><input type="button" value="Logout"/></a>
 
-<h1 class="text-center">My BSLog</h1>
+<h1 class="text-center">My Entry</h1>
 <div class="text-center">
-    <div class="container mx-auto" style="width: 400px;">
-        <table class="table">
-            <thead>
-            <tr>
-                <th class="text-center"><i class="fa fa-tint fa-2x" aria-hidden="true"></i> / <i class="fa fa-cutlery fa-2x" aria-hidden="true"></i></th>
-                <th class="text-center"><i class="fa fa-plus-square fa-2x" aria-hidden="true"></i></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td><a href="/addEntry"><input type="button" value="Add Entry"/></a></td>
-                <td><a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/getbolus.html"><input type="button" value="Get Insulin Bolus"/></a></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<br/>
-<div class="text-center">
-    <h2>My Daily Summary: May 30, 2017</h2>
-    <h3>My Estimated HbA1c: 7.2</h3>
     <br/>
     <div class="container mx-auto" style="width: 700px;">
         <table class="table table-bordered table-hover">
@@ -53,18 +32,25 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="entry : ${entryList}">
+            <tr>
                 <td th:text="${entry.date}"></td>
                 <td th:text="${entry.time}"></td>
                 <td th:text="${entry.bloodsugar}"></td>
                 <td th:text="${entry.totalCarbs}"></td>
                 <td th:text="${entry.insulin}"></td>
-                <td class="text-center"><form action="#" th:action="@{'/editEntry/'+${entry.eid}}" method="get"><input class="btn btn-primary btn-sm btn-default" type="submit" value="Edit"/></form></td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-4 text-center"></div>
+    <div class="col-md-4 text-center">
+        <a th:href="@{'/entry/'+${entry.eid}+'/addCarbs'}"><input class="btn btn-primary btn-info" value="Add Carbs"/></a>
+        <a href="/dash"><input class="btn btn-primary btn-success" value="Done"/></a>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
         crossorigin="anonymous"></script>

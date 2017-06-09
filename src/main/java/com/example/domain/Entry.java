@@ -1,6 +1,7 @@
 package com.example.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -18,9 +19,12 @@ public class Entry {
     private LocalDate date;
     private LocalTime time;
     private User user; //for the user username
+    private Integer totalCarbs;
     private List<Carb> carbs;
     private Insulin insulin;
-    private Bloodsugar bloodsugar;
+
+    @NotNull
+    private Integer bloodsugar;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -76,13 +80,20 @@ public class Entry {
         this.insulin = insulin;
     }
 
-    @OneToOne(mappedBy = "entry", fetch = FetchType.LAZY)
-    public Bloodsugar getBloodsugar() {
+    public Integer getBloodsugar() {
         return bloodsugar;
     }
 
-    public void setBloodsugar(Bloodsugar bloodsugar) {
+    public void setBloodsugar(Integer bloodsugar) {
         this.bloodsugar = bloodsugar;
+    }
+
+    public Integer getTotalCarbs() {
+        return totalCarbs;
+    }
+
+    public void setTotalCarbs(Integer totalCarbs) {
+        this.totalCarbs = totalCarbs;
     }
 
     @Override
@@ -107,6 +118,7 @@ public class Entry {
                 ", date=" + date +
                 ", time=" + time +
                 ", user=" + (user == null ? "" : user.getUsername()) +
+                ", totalCarbs=" + totalCarbs +
                 ", carbs=" + carbs +
                 ", insulin=" + insulin +
                 ", bloodsugar=" + bloodsugar +

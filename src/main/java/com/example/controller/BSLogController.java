@@ -1,10 +1,8 @@
 package com.example.controller;
 
-import com.example.domain.Bloodsugar;
 import com.example.domain.Carb;
 import com.example.domain.Entry;
 import com.example.domain.User;
-import com.example.service.BloodsugarService;
 import com.example.service.CarbService;
 import com.example.service.EntryService;
 import com.example.service.UserService;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -42,25 +41,19 @@ public class BSLogController {
     @Autowired
     CarbService carbService;
 
-    @Autowired
-    BloodsugarService bloodsugarService;
-
     @GetMapping("/dash")
     public String dash(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        System.out.println("\n\n\n"+currentPrincipalName);
-        model.addAttribute("entryList",userService.findByUsername(currentPrincipalName).getEntries());
+
+        model.addAttribute("entryList",entryService.getTotCarbPerEntryByUser(userService.findByUsername(currentPrincipalName)));
+
         return "dash";
     }
 
     @GetMapping("/addEntry")
     public String addEntry(Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-
         Entry entry = new Entry();
-//        entry.setUser(userService.findByUsername(currentPrincipalName));
 
         LocalDate ld = LocalDate.now();
         LocalTime lt = LocalTime.now();
@@ -76,25 +69,49 @@ public class BSLogController {
 
         model.addAttribute("entry", entry);
 
-        Bloodsugar bloodsugar = new Bloodsugar();
-//        bloodsugar.setEntry(entry);
-        model.addAttribute("bloodsugar", bloodsugar);
-
         return "addEntry";
     }
 
     @PostMapping("/addEntry")
-    public String entrySubmit(Model model, Entry entry, Bloodsugar bloodsugar){
+    public String entrySubmit(Model model, Entry entry){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
         entry.setUser(userService.findByUsername(currentPrincipalName));
         entryService.addEntry(entry);
 
-        bloodsugar.setEntry(entry);
-        bloodsugarService.addBloodsugar(bloodsugar);
+        model.addAttribute("entry",entry);
 
-        return "redirect:/dash";
+        return "entry";
+    }
+
+    @GetMapping("/editEntry/{eid}")
+    public String editEntry(Model model, @PathVariable("eid") Integer entry_id){
+        Entry entry = entryService.findEntry(entry_id);
+        model.addAttribute("entry", entry);
+        return "entry";
+    }
+
+    @GetMapping("/entry/{eid}/addCarbs")
+    public String addCarbToEntry(Model model, @PathVariable("eid") Integer entry_id){
+        Entry entry = entryService.findEntry(entry_id);
+        model.addAttribute("carbList",carbService.findAllByEntry(entry));
+        Carb carb = new Carb();
+        model.addAttribute("entry",entry);
+        model.addAttribute("carb",carb);
+        return "addCarbs";
+    }
+
+    @PostMapping("/entry/{eid}/addCarbs")
+    public String carbToEntrySubmit(Model model, @PathVariable("eid") Integer entry_id, Carb carb){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        Entry entry = entryService.findEntry(entry_id);
+        carb.setEntry(entry);
+        carbService.addCarb(carb);
+
+        return "redirect:/entry/"+entry_id+"/addCarbs";
     }
 
     @GetMapping("/login")

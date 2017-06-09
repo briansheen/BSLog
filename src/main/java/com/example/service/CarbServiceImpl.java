@@ -1,7 +1,9 @@
 package com.example.service;
 
 import com.example.domain.Carb;
+import com.example.domain.Entry;
 import com.example.repository.CarbRepository;
+import com.example.repository.EntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,9 @@ public class CarbServiceImpl implements CarbService {
     @Autowired
     CarbRepository carbRepository;
 
+    @Autowired
+    EntryRepository entryRepository;
+
     @Override
     @Transactional(readOnly = true)
     public List<Carb> findAll() {
@@ -28,5 +33,11 @@ public class CarbServiceImpl implements CarbService {
     @Transactional
     public Carb addCarb(Carb carb) {
         return carbRepository.save(carb);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Carb> findAllByEntry(Entry entry) {
+        return entryRepository.findOne(entry.getEid()).getCarbs();
     }
 }

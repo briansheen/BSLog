@@ -35,8 +35,6 @@ public class UserServiceTest {
     @Autowired
     InsulinService insulinService;
 
-    @Autowired
-    BloodsugarService bloodsugarService;
 
     @Test
     public void getUsers() {

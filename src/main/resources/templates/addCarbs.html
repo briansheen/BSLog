@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>My BSLog</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css" rel="stylesheet" />
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <a href="/dash"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
+        <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/profile.html"><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></a>
+        <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/history.html"><input type="button" value="My History"/></a>
+        <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/report.html"><input type="button" value="My Report"/></a>
+        <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/logout.html"><input type="button" value="Logout"/></a>
+    </div>
+</nav>
+<div class="row">
+    <div class="col-md-4 col-md-offset-1">
+        <h1 class="text-center">Enter Carbs Manually</h1>
+        <form action="#" th:action="@{'/entry/'+${entry.eid}+'/addCarbs'}" th:object="${carb}" method="post">
+            <div class="container mx-auto" style="width: 400px;">
+                <table class="table table-bordered table-hover">
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td><input type="text" th:field="*{name}" style="width: 250px;"/></td>
+                        </tr>
+                        <tr>
+                            <td>Total Carbs</td>
+                            <td><input type="text" th:field="*{totalCarbs}" style="width: 100px;"/> grams</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-center"><input class="btn btn-warning" type="submit" value="Add Carb"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-2">
+        <h1 class="text-center">Or</h1>
+    </div>
+    <div class="col-md-4">
+        <h1 class="text-center">Search Food Database</h1>
+        <form action="#" th:action="@{'/entry/'+${entry.eid}+'/addCarbs'}" th:object="${carb}" method="post">
+            <div class="container mx-auto" style="width: 500px;">
+                <table class="table table-bordered table-hover">
+                    <tbody>
+                    <tr>
+                        <td>Food Description</td>
+                        <td><input type="text" style="width: 300px;"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center"><a th:href="@{'/entry/'+${entry.eid}+'/addCarbs'}"><input class="btn btn-warning" type="submit" value="Search"/></a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+    <br/>
+    <div class="row">
+        <div class="col-md-4 text-center"></div>
+        <div class="col-md-4 text-center">
+            <a th:href="@{'/entry/'+${entry.eid}+'/addCarbs'}"><input class="btn btn-primary btn-info" value="Add Insulin"/></a>
+            <a href="/dash"><input class="btn btn-primary btn-success" value="Done"/></a>
+        </div>
+    </div>
+
+<br/>
+<h2 class="text-center">Carbohydrates in Entry</h2>
+<div class="container mx-auto" style="width: 700px;">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th class="text-center">Name</th>
+            <th class="text-center">Serving Size</th>
+            <th class="text-center">Carbs per Serving</th>
+            <th class="text-center">Number of Servings</th>
+            <th class="text-center">Total Carbs</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="carb : ${carbList}">
+            <td th:text="${carb.name}"></td>
+            <td th:text="${carb.servingSize}"></td>
+            <td th:text="${carb.carbsPerServing}"></td>
+            <td th:text="${carb.numServings}"></td>
+            <td th:text="${carb.totalCarbs}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+</html>

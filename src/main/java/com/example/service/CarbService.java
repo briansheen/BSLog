@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.domain.Carb;
+import com.example.domain.Entry;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface CarbService {
     public List<Carb> findAll();
 
     public Carb addCarb(Carb carb);
+
+    public List<Carb> findAllByEntry(Entry entry);
 }

@@ -84,12 +84,12 @@ public class Carb {
 
         Carb carb = (Carb) o;
 
-        return cid.equals(carb.cid);
+        return cid != null ? cid.equals(carb.cid) : carb.cid == null;
     }
 
     @Override
     public int hashCode() {
-        return cid.hashCode();
+        return cid != null ? cid.hashCode() : 0;
     }
 
     @Override

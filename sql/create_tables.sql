@@ -22,6 +22,8 @@ CREATE TABLE `entry` (
   `date` date NOT NULL,
   `time` time NOT NULL,
   `username` varchar(256) NOT NULL,
+  `bloodsugar` int(11) NOT NULL,
+  `total_carbs` int(11) DEFAULT NULL,
   PRIMARY KEY (`eid`),
   KEY `fk_entry_user` (`username`),
   CONSTRAINT `fk_entry_user` FOREIGN KEY (`username`) REFERENCES `user` (`username`)
@@ -38,15 +40,6 @@ CREATE TABLE `carb` (
   PRIMARY KEY (`cid`),
   KEY `fk_carbs_entry` (`entry_id`),
   CONSTRAINT `fk_carbs_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`eid`)
-);
-
-CREATE TABLE `bloodsugar` (
-  `bsid` int(11) NOT NULL AUTO_INCREMENT,
-  `bloodsugar` int(11) NOT NULL,
-  `entry_id` int(11) NOT NULL,
-  PRIMARY KEY (`bsid`),
-  UNIQUE KEY `entry_id` (`entry_id`),
-  CONSTRAINT `fk_bloodsugar_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`eid`)
 );
 
 CREATE TABLE `insulin` (
