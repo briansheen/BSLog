@@ -3,9 +3,15 @@ package com.example.controller;
 import com.example.domain.Carb;
 import com.example.domain.Entry;
 import com.example.domain.User;
+import com.example.domain.ndb.FoodList;
+import com.example.domain.ndb.NdbResponse;
+import com.example.domain.ndb.NdbSearchResponse;
+import com.example.domain.ndb.Nutrient;
 import com.example.service.CarbService;
 import com.example.service.EntryService;
+import com.example.service.NdbService;
 import com.example.service.UserService;
+import org.hibernate.validator.constraints.ParameterScriptAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,12 +21,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * Created by bsheen on 6/1/17.
@@ -40,6 +48,9 @@ public class BSLogController {
 
     @Autowired
     CarbService carbService;
+
+    @Autowired
+    NdbService ndbService;
 
     @GetMapping("/dash")
     public String dash(Model model){
@@ -86,32 +97,64 @@ public class BSLogController {
     }
 
     @GetMapping("/editEntry/{eid}")
-    public String editEntry(Model model, @PathVariable("eid") Integer entry_id){
-        Entry entry = entryService.findEntry(entry_id);
+    public String editEntry(Model model, @PathVariable("eid") Integer eid){
+        Entry entry = entryService.findEntry(eid);
         model.addAttribute("entry", entry);
         return "entry";
     }
 
     @GetMapping("/entry/{eid}/addCarbs")
-    public String addCarbToEntry(Model model, @PathVariable("eid") Integer entry_id){
-        Entry entry = entryService.findEntry(entry_id);
+    public String addCarbToEntry(Model model, @PathVariable("eid") Integer eid){
+        Entry entry = entryService.findEntry(eid);
         model.addAttribute("carbList",carbService.findAllByEntry(entry));
         Carb carb = new Carb();
         model.addAttribute("entry",entry);
         model.addAttribute("carb",carb);
+        FoodList foodList = new FoodList();
+        model.addAttribute("foodList", foodList);
         return "addCarbs";
     }
 
     @PostMapping("/entry/{eid}/addCarbs")
-    public String carbToEntrySubmit(Model model, @PathVariable("eid") Integer entry_id, Carb carb){
+    public String carbToEntrySubmit(Model model, @PathVariable("eid") Integer eid, Carb carb){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
-        Entry entry = entryService.findEntry(entry_id);
+        Entry entry = entryService.findEntry(eid);
         carb.setEntry(entry);
         carbService.addCarb(carb);
 
-        return "redirect:/entry/"+entry_id+"/addCarbs";
+        return "redirect:/entry/"+eid+"/addCarbs";
+    }
+
+    @PostMapping("/entry/{eid}/search")
+    public String searchCarbToEntry(Model model, @PathVariable("eid") Integer eid, @RequestParam(value="query", required = true) String query){
+
+        NdbSearchResponse ndbSearchResponse = ndbService.search(query);
+
+        model.addAttribute("searchResponse", ndbSearchResponse);
+        model.addAttribute("eid", eid);
+
+        return "selectCarbFromSearch";
+    }
+
+    @PostMapping("/entry/{eid}/addCarbsFromSearch")
+    public String addCarbFromSearch(Model model, @PathVariable("eid") Integer eid, @RequestParam(value="ndbno", required=true) String ndbno){
+        NdbResponse ndbResponse = ndbService.get(ndbno);
+
+        Nutrient nutrient = ndbService.findById("Carbohydrate",ndbResponse.getReport().getFood().getNutrients());
+
+        model.addAttribute("nutrient",nutrient);
+        model.addAttribute("ndbResponse", ndbResponse);
+        model.addAttribute("eid",eid);
+        return "selectServingFromGet";
+    }
+
+    @GetMapping("/entry/{eid}/addCarbs/{q}")
+    public String searchNdbForEntry(Model model, @PathVariable("eid") Integer eid, @PathVariable("q") String q){
+        NdbSearchResponse ndbSearchResponse = ndbService.search(q);
+        model.addAttribute("searchResponse", ndbSearchResponse);
+        return "selectCarbFromSearch";
     }
 
     @GetMapping("/login")

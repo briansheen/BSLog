@@ -48,16 +48,16 @@
     </div>
     <div class="col-md-4">
         <h1 class="text-center">Search Food Database</h1>
-        <form action="#" th:action="@{'/entry/'+${entry.eid}+'/addCarbs'}" th:object="${carb}" method="post">
+        <form action="#" th:action="@{'/entry/'+${entry.eid}+'/search'}" method="post">
             <div class="container mx-auto" style="width: 500px;">
                 <table class="table table-bordered table-hover">
                     <tbody>
                     <tr>
                         <td>Food Description</td>
-                        <td><input type="text" style="width: 300px;"/></td>
+                        <td><input type="text" name="query" style="width: 300px;"/></td>
                     </tr>
                     <tr>
-                        <td colspan="2" class="text-center"><a th:href="@{'/entry/'+${entry.eid}+'/addCarbs'}"><input class="btn btn-warning" type="submit" value="Search"/></a></td>
+                        <td colspan="2" class="text-center"><input class="btn btn-warning" type="submit" value="Search"/></td>
                     </tr>
                     </tbody>
                 </table>
