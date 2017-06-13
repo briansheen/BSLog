@@ -36,7 +36,7 @@ public class UserServiceTest {
     InsulinService insulinService;
 
 
-    @Test
+//    @Test
     public void getUsers() {
         List<User> users = userService.findAll();
         Assert.assertNotNull(users);
@@ -46,7 +46,7 @@ public class UserServiceTest {
         }
     }
 
-    @Test
+//    @Test
     public void addUser() {
         User user = new User();
         user.setCreatedAt(LocalDateTime.now());
@@ -59,7 +59,7 @@ public class UserServiceTest {
         Assert.assertNotNull(user2);
     }
 
-    @Test
+//    @Test
     public void addEntry() {
         User user = new User();
         user.setCreatedAt(LocalDateTime.now());
