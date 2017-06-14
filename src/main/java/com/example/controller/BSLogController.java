@@ -56,9 +56,14 @@ public class BSLogController {
     public String dash(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
+
         Date today = new Date();
         model.addAttribute("date", SimpleDateFormat.getDateInstance(DateFormat.MEDIUM).format(today));
         model.addAttribute("entryList", userService.getEntriesByUserToday(currentPrincipalName));
+
+        if(userService.findByUsername(currentPrincipalName)==null){
+            userService.addUser(currentPrincipalName);
+        }
         return "dash";
     }
 

@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://us-cdbr-iron-east-03.cleardb.net/heroku_66fd26bbdf7c416?reconnect=true
+    username: bbd190611c1c1a
+    password: 8368631d
+
+facebook:
+  client:
+    clientId: 723977741105673
+    clientSecret: 16ce7729977ed01182dfa2eae5c567a0
+    accessTokenUri: https://graph.facebook.com/oauth/access_token
+    userAuthorizationUri: https://www.facebook.com/dialog/oauth
+    tokenName: oauth_token
+    authenticationScheme: query
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://graph.facebook.com/me
+
+github:
+  client:
+    clientId: b46fa8ceb7819d5748e9
+    clientSecret: c22b2f81bc2602a795098a1a9f5cff0a0a53427a
+    accessTokenUri: https://github.com/login/oauth/access_token
+    userAuthorizationUri: https://github.com/login/oauth/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.github.com/user
+
+google:
+  client:
+    clientId: 352586664454-4551n9mkcmbhcecjl7trdrd344m6d8pa.apps.googleusercontent.com
+    clientSecret: 3lo4UOjWQ29VOAhnMQ2TQ14s
+    accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+    userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+    clientAuthenticationScheme: form
+    scope: email
+  resource:
+    userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+

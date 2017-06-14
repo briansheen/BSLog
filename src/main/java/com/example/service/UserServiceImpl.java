@@ -1,16 +1,26 @@
 package com.example.service;
 
+
 import com.example.domain.Carb;
+
+import com.example.domain.AuthCompKey;
+import com.example.domain.Authorities;
+
 import com.example.domain.Entry;
 import com.example.domain.User;
+import com.example.repository.AuthoritiesRespository;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.transaction.TransactionScoped;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import java.time.LocalDateTime;
+
 import java.util.List;
 
 /**
@@ -23,6 +33,9 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    AuthoritiesRespository authoritiesRespository;
+
     @Override
     @Transactional(readOnly = true)
     public List<User> findAll() {
@@ -33,18 +46,36 @@ public class UserServiceImpl implements UserService{
     @Transactional(readOnly = true)
     public User findByUsername(String username) {
         User user = userRepository.findOne(username);
-        //have to touch entry to get lazyloading to load
-        user.getEntries().size();
-        for (Entry entry : user.getEntries()) {
-            entry.getCarbs().size();
+        if(user != null){
+            //have to touch entry to get lazyloading to load
+            if(user.getEntries()!=null){
+                user.getEntries().size();
+                for (Entry entry : user.getEntries()) {
+                    entry.getCarbs().size();
+                }
+            }
         }
         return user;
     }
 
     @Override
     @Transactional
-    public User addUser(User user) {
-        return userRepository.save(user);
+    public User addUser(String username) {
+        User user = new User();
+        user.setUsername(username);
+        user.setEnabled(true);
+        LocalDateTime ldt = LocalDateTime.now();
+        user.setCreatedAt(ldt);
+        user = userRepository.save(user);
+
+        Authorities authorities = new Authorities();
+        AuthCompKey authCompKey = new AuthCompKey();
+        authCompKey.setAuthority("ROLE_USER");
+        authCompKey.setUsername(username);
+        authorities.setCompKey(authCompKey);
+        authoritiesRespository.save(authorities);
+
+        return user;
     }
 
     @Override

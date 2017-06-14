@@ -14,9 +14,10 @@ public interface UserService {
 
     public User findByUsername(String username);
 
-    public User addUser(User user);
-
     public List<Entry> getEntriesByUser(String username);
 
     public List<Entry> getEntriesByUserToday(String username);
+
+    public User addUser(String username);
+
 }
