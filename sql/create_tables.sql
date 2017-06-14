@@ -9,13 +9,13 @@ CREATE TABLE `user` (
   `updated_at` date DEFAULT NULL,
   `insulin_type` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`username`)
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE `authorities` (
   `username` varchar(256) NOT NULL,
   `authority` varchar(256) NOT NULL,
   PRIMARY KEY (`username`,`authority`)
-);
+) ENGINE=InnoDB;
 
 CREATE TABLE `entry` (
   `eid` int(11) NOT NULL AUTO_INCREMENT,
@@ -26,8 +26,8 @@ CREATE TABLE `entry` (
   `total_carbs` int(11) DEFAULT NULL,
   PRIMARY KEY (`eid`),
   KEY `fk_entry_user` (`username`),
-  CONSTRAINT `fk_entry_user` FOREIGN KEY (`username`) REFERENCES `user` (`username`)
-);
+  CONSTRAINT `fk_entry_user` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB;
 
 CREATE TABLE `carb` (
   `cid` int(11) NOT NULL AUTO_INCREMENT,
@@ -39,8 +39,8 @@ CREATE TABLE `carb` (
   `entry_id` int(11) NOT NULL,
   PRIMARY KEY (`cid`),
   KEY `fk_carbs_entry` (`entry_id`),
-  CONSTRAINT `fk_carbs_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`eid`)
-);
+  CONSTRAINT `fk_carbs_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`eid`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB;
 
 CREATE TABLE `insulin` (
   `iid` int(11) NOT NULL AUTO_INCREMENT,
@@ -48,8 +48,8 @@ CREATE TABLE `insulin` (
   `entry_id` int(11) NOT NULL,
   PRIMARY KEY (`iid`),
   UNIQUE KEY `entry_id` (`entry_id`),
-  CONSTRAINT `fk_insulin_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`eid`)
-);
+  CONSTRAINT `fk_insulin_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`eid`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB;
 
 insert into user (username, password, enabled, icr, isr) values ('brian','sheen',true,10,40);
 

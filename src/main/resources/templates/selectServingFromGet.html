@@ -20,6 +20,7 @@
 <h1 class="display-3 text-center">Select Serving from Food Database</h1>
 <h3 class="display-3 text-center" th:text="${ndbResponse.getReport().getFood().getName()}"></h3>
 <form action="#" th:action="@{'/entry/'+${eid}+'/refineServingFromSearch'}" th:object="${ndbResponse}" method="post">
+    <input type="hidden" name="ndbno" th:value="${ndbno}"/>
     <div class="container mx-auto table-responsive">
         <table class="table table-bordered table-hover">
             <thead class="thead-inverse">
@@ -32,7 +33,7 @@
             </thead>
             <tbody>
             <tr th:each="measure : ${nutrient.getMeasures()}">
-                <td><input type = "radio" name="serving" th:value="${measure}"/></td>
+                <td><input type="radio" name="label" th:value="${measure.label}"/></td>
                 <td th:text="${measure.qty}+'&nbsp;'+${measure.label}"></td>
                 <td th:text="${measure.eqv}+'&nbsp;'+${measure.eunit}"></td>
                 <td th:text="${measure.value}"></td>

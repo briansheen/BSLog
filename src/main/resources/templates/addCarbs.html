@@ -29,7 +29,19 @@
                     <tbody>
                         <tr>
                             <td>Name</td>
-                            <td><input type="text" th:field="*{name}" style="width: 250px;"/></td>
+                            <td><input type="text" th:field="*{name}" style="width: 200px;"/></td>
+                        </tr>
+                        <tr>
+                            <td>Serving Size</td>
+                            <td><input type="text" th:field="*{servingSize}" style="width: 200px;"/></td>
+                        </tr>
+                        <tr>
+                            <td>Carbs Per Serving</td>
+                            <td><input type="text" th:field="*{carbsPerServing}" style="width: 100px;"/> grams</td>
+                        </tr>
+                        <tr>
+                            <td>Number Of Servings</td>
+                            <td><input type="text" th:field="*{numServings}" style="width: 200px;"/></td>
                         </tr>
                         <tr>
                             <td>Total Carbs</td>
@@ -82,8 +94,8 @@
         <tr>
             <th class="text-center">Name</th>
             <th class="text-center">Serving Size</th>
-            <th class="text-center">Carbs per Serving</th>
-            <th class="text-center">Number of Servings</th>
+            <th class="text-center">Carbs Per Serving</th>
+            <th class="text-center">Number Of Servings</th>
             <th class="text-center">Total Carbs</th>
         </tr>
         </thead>

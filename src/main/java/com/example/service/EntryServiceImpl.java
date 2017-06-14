@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,5 +65,10 @@ public class EntryServiceImpl implements EntryService {
             }
         }
         return entryRepository.findAll();
+    }
+
+    @Override
+    public void deleteEntry(Integer eid) {
+        entryRepository.delete(eid);
     }
 }

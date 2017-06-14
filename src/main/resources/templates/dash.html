@@ -38,32 +38,37 @@
 </div>
 <br/>
 <div class="text-center">
-    <h2>My Daily Summary: May 30, 2017</h2>
+    <h2>My Daily Summary: <span th:text="${date}"></span></h2>
     <h3>My Estimated HbA1c: 7.2</h3>
     <br/>
-    <div class="container mx-auto" style="width: 700px;">
-        <table class="table table-bordered table-hover">
-            <thead>
-            <tr>
-                <th class="text-center">Date</th>
-                <th class="text-center">Time</th>
-                <th class="text-center">Blood Sugar</th>
-                <th class="text-center">Carbs</th>
-                <th class="text-center">Insulin</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="entry : ${entryList}">
-                <td th:text="${entry.date}"></td>
-                <td th:text="${entry.time}"></td>
-                <td th:text="${entry.bloodsugar}"></td>
-                <td th:text="${entry.totalCarbs}"></td>
-                <td th:text="${entry.insulin}"></td>
-                <td class="text-center"><form action="#" th:action="@{'/editEntry/'+${entry.eid}}" method="get"><input class="btn btn-primary btn-sm btn-default" type="submit" value="Edit"/></form></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <form action="#" th:action="@{/dash}" th:object="${entryList}" method="post">
+        <div class="container mx-auto" style="width: 700px;">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Time</th>
+                    <th class="text-center">Blood Sugar</th>
+                    <th class="text-center">Carbs</th>
+                    <th class="text-center">Insulin</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="entry : ${entryList}">
+                    <td><input type="checkbox" name="deleteMe" th:value="${entry.eid}"/></td>
+                    <td th:text="${entry.date}"></td>
+                    <td th:text="${entry.time}"></td>
+                    <td th:text="${entry.bloodsugar}"></td>
+                    <td th:text="${entry.totalCarbs}"></td>
+                    <td th:text="${entry.insulin}"></td>
+                    <td class="text-center"><a th:href="'/editEntry/'+${entry.eid}"><input class="btn btn-primary btn-sm btn-default" value="Edit"/></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <input class="btn btn-primary btn-danger" type="submit" value="Delete Checked Entries" onclick="return confirm('Are you sure you want to delete selected entries?');"/>
+    </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
