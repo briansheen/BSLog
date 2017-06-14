@@ -7,8 +7,8 @@ spring:
 
 facebook:
   client:
-    clientId: 323940131373643
-    clientSecret: 36f5f8e14e46a0ee08e96fb41fce689f
+    clientId: 723977741105673
+    clientSecret: 16ce7729977ed01182dfa2eae5c567a0
     accessTokenUri: https://graph.facebook.com/oauth/access_token
     userAuthorizationUri: https://www.facebook.com/dialog/oauth
     tokenName: oauth_token
