@@ -36,14 +36,15 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional(readOnly = true)
     public User findByUsername(String username) {
-        if(userRepository.findOne(username)==null){
-            return null;
-        }
         User user = userRepository.findOne(username);
-        //have to touch entry to get lazyloading to load
-        user.getEntries().size();
-        for (Entry entry : user.getEntries()) {
-            entry.getCarbs().size();
+        if(user != null){
+            //have to touch entry to get lazyloading to load
+            if(user.getEntries()!=null){
+                user.getEntries().size();
+                for (Entry entry : user.getEntries()) {
+                    entry.getCarbs().size();
+                }
+            }
         }
         return user;
     }
