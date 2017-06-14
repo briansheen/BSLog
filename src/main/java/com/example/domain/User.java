@@ -12,7 +12,6 @@ import java.util.List;
 @Table(name="user")
 public class User {
     private String username;
-    private String password;
     private Boolean enabled;
     private Integer isr;
     private Integer icr;
@@ -28,14 +27,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Boolean getEnabled() {
@@ -114,7 +105,6 @@ public class User {
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 ", isr=" + isr +
                 ", icr=" + icr +

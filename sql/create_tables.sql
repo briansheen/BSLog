@@ -1,7 +1,6 @@
 
 CREATE TABLE `user` (
   `username` varchar(256) NOT NULL,
-  `password` varchar(256) NOT NULL,
   `enabled` tinyint(1) DEFAULT NULL,
   `isr` int(11) DEFAULT NULL,
   `icr` int(11) DEFAULT NULL,
@@ -51,11 +50,11 @@ CREATE TABLE `insulin` (
   CONSTRAINT `fk_insulin_entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`eid`)
 );
 
-insert into user (username, password, enabled, icr, isr) values ('brian','sheen',true,10,40);
+insert into user (username, enabled, icr, isr) values ('brian',true,10,40);
 
 insert into authorities (username, authority) values ('brian', 'ROLE_USER');
 
-insert into user (username, password, enabled) values ('admin','admin',true);
+insert into user (username, enabled) values ('admin',true);
 
 insert into authorities (username, authority) values ('admin', 'ROLE_ADMIN');
 

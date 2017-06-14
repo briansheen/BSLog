@@ -57,6 +57,11 @@ public class BSLogController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
+        if(userService.findByUsername(currentPrincipalName)==null){
+
+            userService.addUser(currentPrincipalName);
+        }
+
         model.addAttribute("entryList",entryService.getTotCarbPerEntryByUser(userService.findByUsername(currentPrincipalName)));
 
         return "dash";
