@@ -13,11 +13,11 @@
 <body>
 <nav class="navbar navbar-default">
     <div class="navbar-header">
-        <a href="/dash"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
-        <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/profile.html"><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></a>
+        <a class="btn" href="/dash"><i class="fa fa-home fa-fw" aria-hidden="true"></i>Home</a>
+        <a class="btn" href="/profile"><i class="fa fa-user-o fa-fw" aria-hidden="true"></i>Profile</a>
         <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/history.html"><input type="button" value="My History"/></a>
         <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/report.html"><input type="button" value="My Report"/></a>
-        <form class="navbar-form navbar-right" action="/logout" method="post"><input type="submit" value="Logout"/></form>
+        <a class="btn" href="/logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Logout</a>
     </div>
 </nav>
 
@@ -67,7 +67,7 @@
                     <td th:text="${entry.bloodsugar}"></td>
                     <td th:text="${entry.totalCarbs}"></td>
                     <td th:text="${entry.insulin}"></td>
-                    <td class="text-center"><a th:href="'/editEntry/'+${entry.eid}"><input class="btn btn-primary btn-sm btn-default" value="Edit"/></a></td>
+                    <td class="text-center"><a th:href="'/editEntry/'+${entry.eid}"><input class="btn btn-primary" type="button" value="Edit"/></a></td>
                 </tr>
                 </tbody>
             </table>

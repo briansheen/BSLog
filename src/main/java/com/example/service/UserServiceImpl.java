@@ -86,7 +86,10 @@ public class UserServiceImpl implements UserService{
     @Transactional(readOnly = true)
     public List<Entry> findAllEntriesByUser(String username) {
         User user = userRepository.findOne(username);
-        return user.getEntries();
+        if(user.getEntries()!=null) {
+            return user.getEntries();
+        }
+        return null;
     }
 
     @Override
@@ -94,11 +97,18 @@ public class UserServiceImpl implements UserService{
     public List<Entry> getEntriesByUserToday(String username) {
         List<Entry> todaysEntries = new ArrayList<>();
         List<Entry> entries = findAllEntriesByUser(username);
-        for(Entry entry : entries){
-            if(entry.getDate().equals(LocalDate.now())){
-                todaysEntries.add(entry);
+        if(entries != null) {
+            for (Entry entry : entries) {
+                if (entry.getDate().equals(LocalDate.now())) {
+                    todaysEntries.add(entry);
+                }
             }
         }
         return todaysEntries;
+    }
+
+    @Override
+    public User updateUserSettings(User user) {
+        return userRepository.save(user);
     }
 }

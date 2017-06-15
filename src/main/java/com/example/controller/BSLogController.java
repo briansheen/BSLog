@@ -177,6 +177,36 @@ public class BSLogController {
         return "redirect:/entry/" + eid + "/addCarbs";
     }
 
+    @GetMapping("/profile")
+    public String profile(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userService.findByUsername(currentPrincipalName);
+        model.addAttribute("user", user);
+        return "profile";
+    }
+
+    @GetMapping("/editProfile")
+    public String editProfile(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userService.findByUsername(currentPrincipalName);
+        model.addAttribute("user", user);
+        return "editProfile";
+    }
+
+    @PostMapping("/editProfile")
+    public String editProfileSubmit(Model model, User user){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User userInDb = userService.findByUsername(currentPrincipalName);
+        userInDb.setIcr(user.getIcr());
+        userInDb.setIsr(user.getIsr());
+        userInDb.setUpdatedAt(LocalDateTime.now());
+        userService.updateUserSettings(userInDb);
+        return "redirect:/profile";
+    }
+
 
     @GetMapping("/login")
     public String login() {

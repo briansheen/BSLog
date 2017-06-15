@@ -20,4 +20,6 @@ public interface UserService {
 
     public User addUser(String username);
 
+    public User updateUserSettings(User user);
+
 }

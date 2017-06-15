@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>My BSLog</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css"
+          rel="stylesheet"/>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="navbar-header">
+        <a class="btn" href="/dash"><i class="fa fa-home fa-fw" aria-hidden="true"></i>Home</a>
+        <a class="btn" href="/profile"><i class="fa fa-user-o fa-fw" aria-hidden="true"></i>Profile</a>
+        <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/history.html"><input type="button" value="My History"/></a>
+        <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/report.html"><input type="button" value="My Report"/></a>
+        <a class="btn" href="/logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Logout</a>
+    </div>
+</nav>
+
+<h1 class="text-center">My Profile</h1>
+<br/>
+
+<div class="container mx-auto table-responsive">
+    <table class="table table-bordered table-hover">
+        <tbody>
+        <tr>
+            <td>Username</td>
+            <td><input type="text" th:value="${user.getUsername()}" readonly="readonly"/></td>
+        </tr>
+        <tr>
+            <td>Insulin Type</td>
+            <td>
+                <select>
+                    <option readonly="readonly">Humalog U-100</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Insulin to Carb Ratio</td>
+            <td>1 unit : <input type="text" th:value="${user.getIcr()}" style="width: 50px;" readonly="readonly"/> grams</td>
+        </tr>
+        <tr>
+            <td>Insulin Sensitivity Ratio</td>
+            <td>1 unit : <input type="text" th:value="${user.getIsr()}" style="width: 50px;" readonly="readonly"/> mg/dL</td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <div class="text-center"><a href="/editProfile"><input class="btn btn-primary btn-info" type="button" value="Edit Profile"/></a></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -13,11 +13,11 @@
 <body>
 <nav class="navbar navbar-default">
     <div class="navbar-header">
-        <a href="/dash"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
-        <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/profile.html"><i class="fa fa-user-o fa-2x" aria-hidden="true"></i></a>
+        <a class="btn" href="/dash"><i class="fa fa-home fa-fw" aria-hidden="true"></i>Home</a>
+        <a class="btn" href="/profile"><i class="fa fa-user-o fa-fw" aria-hidden="true"></i>Profile</a>
         <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/history.html"><input type="button" value="My History"/></a>
         <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/report.html"><input type="button" value="My Report"/></a>
-        <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/logout.html"><input type="button" value="Logout"/></a>
+        <a class="btn" href="/logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Logout</a>
     </div>
 </nav>
 <div class="row">
@@ -81,8 +81,8 @@
     <div class="row">
         <div class="col-md-4 text-center"></div>
         <div class="col-md-4 text-center">
-            <a th:href="@{'/entry/'+${entry.eid}+'/addCarbs'}"><input class="btn btn-primary btn-info" value="Add Insulin"/></a>
-            <a href="/dash"><input class="btn btn-primary btn-success" value="Done"/></a>
+            <a th:href="@{'/entry/'+${entry.eid}+'/addCarbs'}"><input class="btn btn-primary btn-info" type="button" value="Add Insulin"/></a>
+            <a href="/dash"><input class="btn btn-primary btn-success" type="button" value="Done"/></a>
         </div>
     </div>
 
