@@ -47,25 +47,6 @@ public class EntryServiceImpl implements EntryService {
         return entryRepository.save(entry);
     }
 
-    @Override
-    @Transactional
-    public List<Entry> getTotCarbPerEntryByUser(User user){
-        Integer totcarbs = 0;
-        if(entryRepository.findAll().size()>0) {
-            for (Entry entry : entryRepository.findAll()) {
-                if(entry.getCarbs().size()>0){
-                    for (Carb carb : entry.getCarbs()) {
-                        if(carb.getTotalCarbs()!=null) {
-                            totcarbs += carb.getTotalCarbs();
-                        }
-                    }
-                    entry.setTotalCarbs(totcarbs);
-                    totcarbs=0;
-                }
-            }
-        }
-        return entryRepository.findAll();
-    }
 
     @Override
     public void deleteEntry(Integer eid) {

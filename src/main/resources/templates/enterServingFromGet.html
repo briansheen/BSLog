@@ -17,37 +17,40 @@
 <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/report.html"><input type="button" value="My Report"/></a>
 <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/logout.html"><input type="button" value="Logout"/></a>
 
-<h1 class="display-3 text-center">Enter Number Of Servings</h1>
-<h3 class="display-3 text-center" th:text="${carb.getName()}"></h3>
-<form action="#" th:action="@{'/entry/'+${eid}+'/enterCarbsFromSearch'}" th:object="${carb}" method="post">
-<div class="text-center">
-    <br/>
-    <div class="container mx-auto table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead>
-            <tr>
-                <th class="text-center">Serving Size</th>
-                <th class="text-center">Carbs Per Serving</th>
-                <th class="text-center">Number Of Servings</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td th:text="${carb.getServingSize()}"></td>
-                <td th:text="${carb.getCarbsPerServing()}"></td>
-                <td><input type="text" th:field="*{numServings}"/></td>
-            </tr>
-            </tbody>
-        </table>
+<form class="form-horizontal" action="#" th:action="@{'/entry/'+${eid}+'/enterCarbsFromSearch'}" th:object="${carb}" method="post">
+    <h1 class="display-3 text-center">Enter Number Of Servings</h1>
+    <div class="form-group">
+        <label for="inputNumServings" class="col-sm-2 control-label">Number Of Servings</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputNumServings" th:field="*{numServings}"/>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-4 text-center"></div>
-    <div class="col-md-4 text-center">
-        <input class="btn btn-primary btn-info" type="submit" value="Enter Carbs To Entry"/>
-        <a th:href="@{'/entry/'+${eid}+'/addCarbs'}"><input class="btn btn-primary btn-success" value="Back"/></a>
+    <div class="form-group">
+        <label for="inputName" class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputName" th:field="*{name}" th:value="${carb.getName()}" readonly="readonly"/>
+        </div>
     </div>
-</div>
+    <div class="form-group">
+        <label for="inputServingSize" class="col-sm-2 control-label">Serving Size</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputServingSize" th:field="*{servingSize}" th:value="${carb.getServingSize()}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputCarbsPerServing" class="col-sm-2 control-label">Carbs Per Serving</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputCarbsPerServing" th:field="*{carbsPerServing}" th:value="${carb.getCarbsPerServing()}" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 text-center"></div>
+        <div class="col-md-4 text-center">
+            <input class="btn btn-primary btn-info" type="submit" value="Enter Carbs To Entry"/>
+            <a th:href="@{'/entry/'+${eid}+'/addCarbs'}"><input class="btn btn-primary btn-success" value="Back"/></a>
+        </div>
+    </div>
+
 </form>
 
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"

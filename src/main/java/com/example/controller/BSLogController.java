@@ -57,13 +57,14 @@ public class BSLogController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
+        if(userService.findByUsername(currentPrincipalName)==null){
+            userService.addUser(currentPrincipalName);
+        }
+
         Date today = new Date();
         model.addAttribute("date", SimpleDateFormat.getDateInstance(DateFormat.MEDIUM).format(today));
         model.addAttribute("entryList", userService.getEntriesByUserToday(currentPrincipalName));
 
-        if(userService.findByUsername(currentPrincipalName)==null){
-            userService.addUser(currentPrincipalName);
-        }
         return "dash";
     }
 
@@ -114,8 +115,6 @@ public class BSLogController {
         Carb carb = new Carb();
         model.addAttribute("entry", entry);
         model.addAttribute("carb", carb);
-        FoodList foodList = new FoodList();
-        model.addAttribute("foodList", foodList);
         return "addCarbs";
     }
 
@@ -171,22 +170,13 @@ public class BSLogController {
 
     @PostMapping("/entry/{eid}/enterCarbsFromSearch")
     public String enterCarbFromSearch(Model model, @PathVariable("eid") Integer eid, Carb carb){
-        System.out.println("\n\n\n in enter carb from search");
-        System.out.println("\n\n\n carb is: " + carb);
-        System.out.println("\n\n\n eid is: " + eid);
+        Entry entry = entryService.findEntry(eid);
+        carb.setEntry(entry);
         carb.setTotalCarbs(carb.getNumServings()*carb.getCarbsPerServing());
-        System.out.println("\n\n\n carb is: " + carb);
         carbService.addCarb(carb);
         return "redirect:/entry/" + eid + "/addCarbs";
     }
 
-
-    @GetMapping("/entry/{eid}/addCarbs/{q}")
-    public String searchNdbForEntry(Model model, @PathVariable("eid") Integer eid, @PathVariable("q") String q) {
-        NdbSearchResponse ndbSearchResponse = ndbService.search(q);
-        model.addAttribute("searchResponse", ndbSearchResponse);
-        return "selectCarbFromSearch";
-    }
 
     @GetMapping("/login")
     public String login() {

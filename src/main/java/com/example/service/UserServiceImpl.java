@@ -9,6 +9,7 @@ import com.example.domain.Authorities;
 import com.example.domain.Entry;
 import com.example.domain.User;
 import com.example.repository.AuthoritiesRespository;
+import com.example.repository.EntryRepository;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     AuthoritiesRespository authoritiesRespository;
+
+    @Autowired
+    EntryRepository entryRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -80,20 +84,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<Entry> getEntriesByUser(String username) {
+    public List<Entry> findAllEntriesByUser(String username) {
         User user = userRepository.findOne(username);
-        Integer totcarbs = 0;
-        for (Entry entry : user.getEntries()) {
-            if(entry.getCarbs().size()>0){
-                for (Carb carb : entry.getCarbs()) {
-                    if(carb.getTotalCarbs()!=null) {
-                        totcarbs += carb.getTotalCarbs();
-                    }
-                }
-                entry.setTotalCarbs(totcarbs);
-                totcarbs=0;
-            }
-        }
         return user.getEntries();
     }
 
@@ -101,7 +93,7 @@ public class UserServiceImpl implements UserService{
     @Transactional(readOnly = true)
     public List<Entry> getEntriesByUserToday(String username) {
         List<Entry> todaysEntries = new ArrayList<>();
-        List<Entry> entries = getEntriesByUser(username);
+        List<Entry> entries = findAllEntriesByUser(username);
         for(Entry entry : entries){
             if(entry.getDate().equals(LocalDate.now())){
                 todaysEntries.add(entry);

@@ -14,7 +14,7 @@ public interface UserService {
 
     public User findByUsername(String username);
 
-    public List<Entry> getEntriesByUser(String username);
+    public List<Entry> findAllEntriesByUser(String username);
 
     public List<Entry> getEntriesByUserToday(String username);
 

@@ -1,36 +1,66 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>Demo</title>
-    <meta name="description" content=""/>
-    <meta name="viewport" content="width=device-width"/>
-    <base href="/"/>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
-    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>My BSLog</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css"
+          rel="stylesheet"/>
 </head>
 <body>
-<h1>Demo</h1>
-<div class="container"></div>
+<h1 class="text-center">Welcome to BSLog!</h1>
+<br/>
+<h5 class="text-center">BSLog is a web application designed to reinforce the fundamentals of diabetes management for
+    Type I diabetes -
+    logging your blood sugars and counting carbohydrates.</h5>
+<h5 class="text-center">With the assistance of BSLog's carbohydrate counting and bolus calculator, the insulin you take
+    will be the most
+    efficient amount to keep your blood sugars in range to meet your HgA1c goals.</h5>
+<br/>
+<h3 class="text-center">Create an Account / Login to an Existing Account:</h3>
 
 <div class="container">
-    <div>
-        With Facebook: <a href="/login/facebook">click here</a>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <a href="/login/facebook" class="btn btn-block btn-social btn-facebook btn-login">
+                <span class="fa fa-facebook"></span> Sign in with Facebook
+            </a>
+        </div>
     </div>
-    <div>
-        With Github: <a href="/login/github">click here</a>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <a href="/login/github" class="btn btn-block btn-social btn-github btn-login">
+                <span class="fa fa-github"></span> Sign in with Github
+            </a>
+        </div>
     </div>
-    <div>
-        With Google: <a href="/login/google">click here</a>
-    </div>
-    <div>
-        <form action="/logout" method="post">
-            <input type="submit" value="Logout"/>
-        </form>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <a href="/login/google" class="btn btn-block btn-social btn-google btn-login">
+                <span class="fa fa-google"></span> Sign in with Google
+            </a>
+        </div>
     </div>
 </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>

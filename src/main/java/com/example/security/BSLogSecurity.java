@@ -49,6 +49,7 @@ public class BSLogSecurity extends WebSecurityConfigurerAdapter{
                 .antMatcher("/**").authorizeRequests()
                 .antMatchers("/", "/login**").permitAll()
                 .anyRequest().authenticated()
+                .and().formLogin().loginPage("/").permitAll()
                 .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
     }
 

@@ -18,8 +18,6 @@ public interface EntryService {
 
     public Entry updateEntry(Entry entry);
 
-    public List<Entry> getTotCarbPerEntryByUser(User user);
-
     public void deleteEntry(Integer eid);
 
 }

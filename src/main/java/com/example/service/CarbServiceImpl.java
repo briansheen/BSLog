@@ -32,7 +32,17 @@ public class CarbServiceImpl implements CarbService {
     @Override
     @Transactional
     public Carb addCarb(Carb carb) {
-        return carbRepository.save(carb);
+        carb = carbRepository.save(carb);
+        Entry entry = entryRepository.findOne(carb.getEntry().getEid());
+        Integer totcarbs = 0;
+        for(Carb c : entry.getCarbs()){
+            if(c.getTotalCarbs()!=null){
+                totcarbs += c.getTotalCarbs();
+            }
+        }
+        entry.setTotalCarbs(totcarbs);
+        entryRepository.save(entry);
+        return carb;
     }
 
     @Override
