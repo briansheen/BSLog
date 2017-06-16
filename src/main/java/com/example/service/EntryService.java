@@ -16,8 +16,12 @@ public interface EntryService {
 
     public Entry findEntry(Integer eid);
 
-    public Entry updateEntry(Entry entry);
+    public Entry updateEntry(Entry entry, Integer eid);
 
     public void deleteEntry(Integer eid);
+
+    public void deleteEntries(List<Integer> eids);
+
+    public Entry updateEntryTotCarbs(Integer eid);
 
 }

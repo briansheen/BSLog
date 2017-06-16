@@ -35,14 +35,36 @@ public class CarbServiceImpl implements CarbService {
         carb = carbRepository.save(carb);
         Entry entry = entryRepository.findOne(carb.getEntry().getEid());
         Integer totcarbs = 0;
-        for(Carb c : entry.getCarbs()){
-            if(c.getTotalCarbs()!=null){
-                totcarbs += c.getTotalCarbs();
+        if (entry.getCarbs() != null) {
+            for(Carb c : entry.getCarbs()){
+                if(c.getTotalCarbs()!=null){
+                    totcarbs += c.getTotalCarbs();
+                }
             }
         }
-        entry.setTotalCarbs(totcarbs);
+        if(totcarbs!=0){
+            entry.setTotalCarbs(totcarbs);
+        }
         entryRepository.save(entry);
         return carb;
+    }
+
+    @Override
+    @Transactional
+    public void deleteCarb(Integer cid) {
+        carbRepository.delete(cid);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCarbs(List<Integer> cids) {
+        if(cids!=null){
+            if(cids.size()>0) {
+                for (Integer cid : cids) {
+                    carbRepository.delete(cid);
+                }
+            }
+        }
     }
 
     @Override

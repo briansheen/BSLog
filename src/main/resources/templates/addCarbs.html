@@ -87,11 +87,13 @@
     </div>
 
 <br/>
+<form action="#" th:action="@{'/entry/'+${entry.eid}+'/deleteCarbs'}" method="post">
 <h2 class="text-center">Carbohydrates in Entry</h2>
 <div class="container mx-auto" style="width: 700px;">
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
+            <th></th>
             <th class="text-center">Name</th>
             <th class="text-center">Serving Size</th>
             <th class="text-center">Carbs Per Serving</th>
@@ -101,6 +103,7 @@
         </thead>
         <tbody>
         <tr th:each="carb : ${carbList}">
+            <td><input type="checkbox" name="deleteMe" th:value="${carb.cid}"/></td>
             <td th:text="${carb.name}"></td>
             <td th:text="${carb.servingSize}"></td>
             <td th:text="${carb.carbsPerServing}"></td>
@@ -109,7 +112,15 @@
         </tr>
         </tbody>
     </table>
+    <div class="row">
+        <div class="col-md-4 text-center"></div>
+        <div class="col-md-4 text-center">
+            <input class="btn btn-primary btn-danger" type="submit" value="Delete Checked Carbs"
+                   onclick="return confirm('Are you sure you want to delete selected carbs?');"/>
+        </div>
+    </div>
 </div>
+</form>
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
         crossorigin="anonymous"></script>

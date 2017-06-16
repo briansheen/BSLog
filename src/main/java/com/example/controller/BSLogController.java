@@ -69,10 +69,8 @@ public class BSLogController {
     }
 
     @PostMapping("/dash")
-    public String deleteEntries(Model model, @RequestParam(value = "deleteMe", required = true) List<Integer> eids) {
-        for (Integer eid : eids) {
-            entryService.deleteEntry(eid);
-        }
+    public String deleteEntries(Model model, @RequestParam(value = "deleteMe", required = false) List<Integer> eids) {
+        entryService.deleteEntries(eids);
         return "redirect:/dash";
     }
 
@@ -101,11 +99,26 @@ public class BSLogController {
         return "entry";
     }
 
-    @GetMapping("/editEntry/{eid}")
-    public String editEntry(Model model, @PathVariable("eid") Integer eid) {
+    @GetMapping("/viewEntry/{eid}")
+    public String viewEntry(Model model, @PathVariable("eid") Integer eid) {
         Entry entry = entryService.findEntry(eid);
         model.addAttribute("entry", entry);
+        model.addAttribute("carbList",entry.getCarbs());
         return "entry";
+    }
+
+    @GetMapping("/editEntry/{eid}")
+    public String editEntry(Model model, @PathVariable("eid") Integer eid){
+        Entry entry = entryService.findEntry(eid);
+        model.addAttribute("entry", entry);
+        model.addAttribute("carbList", entry.getCarbs());
+        return "editEntry";
+    }
+
+    @PostMapping("/editEntry/{eid}")
+    public String editEntrySubmit(Model model, @PathVariable("eid") Integer eid, Entry entry){
+        entryService.updateEntry(entry,eid);
+        return "redirect:/viewEntry/"+eid;
     }
 
     @GetMapping("/entry/{eid}/addCarbs")
@@ -118,8 +131,14 @@ public class BSLogController {
         return "addCarbs";
     }
 
+    @PostMapping("/entry/{eid}/deleteCarbs")
+    public String deleteCarbs(Model model, @PathVariable("eid") Integer eid, @RequestParam(value="deleteMe", required = false) List<Integer> cids){
+        carbService.deleteCarbs(cids);
+        return "redirect:/entry/"+eid+"/addCarbs";
+    }
+
     @PostMapping("/entry/{eid}/addCarbs")
-    public String carbToEntrySubmit(Model model, @PathVariable("eid") Integer eid, Carb carb) {
+    public String carbToEntrySubmit(Model model, @PathVariable("eid") Integer eid, @RequestParam(value="deleteMe", required = false) List<Integer> cids, Carb carb) {
         Entry entry = entryService.findEntry(eid);
         carb.setEntry(entry);
         carbService.addCarb(carb);

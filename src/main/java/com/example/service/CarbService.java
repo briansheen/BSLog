@@ -15,4 +15,8 @@ public interface CarbService {
     public Carb addCarb(Carb carb);
 
     public List<Carb> findAllByEntry(Entry entry);
+
+    public void deleteCarb(Integer cid);
+
+    public void deleteCarbs(List<Integer> cids);
 }
