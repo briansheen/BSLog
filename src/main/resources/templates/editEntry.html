@@ -40,11 +40,11 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><input type="text" th:field="*{date}" th:value="${entry.date}"/></td>
-                    <td><input type="text" th:field="*{time}" th:value="${entry.time}"/></td>
-                    <td><input type="text" th:field="*{bloodsugar}" th:value="${entry.bloodsugar}"/></td>
-                    <td><input type="text" th:value="${entry.totalCarbs}" disabled="disabled"/></td>
-                    <td><input type="text" th:field="*{insulin}" th:value="${entry.insulin}"/></td>
+                    <td><input type="text" class="form-control" th:field="*{date}" th:value="${entry.date}"/></td>
+                    <td><input type="text" class="form-control" th:field="*{time}" th:value="${entry.time}"/></td>
+                    <td><div class="input-group"><input type="text" class="form-control" th:field="*{bloodsugar}" th:value="${entry.bloodsugar}"/><div class="input-group-addon"> mg/dL</div></div></td>
+                    <td><div class="input-group"><input type="text" class="form-control" th:field="*{totalCarbs}" th:value="${entry.totalCarbs}" readonly="readonly"/><div class="input-group-addon"> grams</div></div></td>
+                    <td><div class="input-group"><input type="text" class="form-control" th:field="*{bolus}" th:value="${entry.bolus}" readonly="readonly"/><div class="input-group-addon"> units</div></div></td>
                 </tr>
                 </tbody>
             </table>
@@ -53,8 +53,8 @@
     <div class="row">
         <div class="col-md-4 text-center"></div>
         <div class="col-md-4 text-center">
-            <input class="btn btn-primary btn-info" type="submit" value="Submit"/>
-            <a th:href="'/viewEntry/'+${entry.eid}"><input class="btn btn-primary btn-success" type="button" value="Cancel"/></a>
+            <input class="btn btn-info" type="submit" value="Submit"/>
+            <a th:href="'/viewEntry/'+${entry.eid}"><input class="btn btn-success" type="button" value="Cancel"/></a>
         </div>
     </div>
 </form>

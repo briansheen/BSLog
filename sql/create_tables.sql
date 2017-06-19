@@ -22,6 +22,7 @@ CREATE TABLE `entry` (
   `time` time NOT NULL,
   `username` varchar(256) NOT NULL,
   `bloodsugar` int(11) NOT NULL,
+  `bolus` double DEFAULT NULL,
   `total_carbs` int(11) DEFAULT NULL,
   PRIMARY KEY (`eid`),
   KEY `fk_entry_user` (`username`),
@@ -43,7 +44,7 @@ CREATE TABLE `carb` (
 
 CREATE TABLE `insulin` (
   `iid` int(11) NOT NULL AUTO_INCREMENT,
-  `insulin` double DEFAULT NULL,
+  `bolus` double DEFAULT NULL,
   `entry_id` int(11) NOT NULL,
   PRIMARY KEY (`iid`),
   UNIQUE KEY `entry_id` (`entry_id`),

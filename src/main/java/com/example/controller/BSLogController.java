@@ -2,12 +2,10 @@ package com.example.controller;
 
 import com.example.domain.Carb;
 import com.example.domain.Entry;
+import com.example.domain.Insulin;
 import com.example.domain.User;
 import com.example.domain.ndb.*;
-import com.example.service.CarbService;
-import com.example.service.EntryService;
-import com.example.service.NdbService;
-import com.example.service.UserService;
+import com.example.service.*;
 import org.hibernate.validator.constraints.ParameterScriptAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -52,12 +50,15 @@ public class BSLogController {
     @Autowired
     NdbService ndbService;
 
+    @Autowired
+    InsulinService insulinService;
+
     @GetMapping("/dash")
     public String dash(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
-        if(userService.findByUsername(currentPrincipalName)==null){
+        if (userService.findByUsername(currentPrincipalName) == null) {
             userService.addUser(currentPrincipalName);
         }
 
@@ -103,22 +104,23 @@ public class BSLogController {
     public String viewEntry(Model model, @PathVariable("eid") Integer eid) {
         Entry entry = entryService.findEntry(eid);
         model.addAttribute("entry", entry);
-        model.addAttribute("carbList",entry.getCarbs());
+        model.addAttribute("carbList", entry.getCarbs());
         return "entry";
     }
 
     @GetMapping("/editEntry/{eid}")
-    public String editEntry(Model model, @PathVariable("eid") Integer eid){
+    public String editEntry(Model model, @PathVariable("eid") Integer eid) {
         Entry entry = entryService.findEntry(eid);
+        model.addAttribute("insulin", entry.getInsulin());
         model.addAttribute("entry", entry);
         model.addAttribute("carbList", entry.getCarbs());
         return "editEntry";
     }
 
     @PostMapping("/editEntry/{eid}")
-    public String editEntrySubmit(Model model, @PathVariable("eid") Integer eid, Entry entry){
-        entryService.updateEntry(entry,eid);
-        return "redirect:/viewEntry/"+eid;
+    public String editEntrySubmit(Model model, @PathVariable("eid") Integer eid, Entry entry) {
+        entryService.updateEntry(entry, eid);
+        return "redirect:/viewEntry/" + eid;
     }
 
     @GetMapping("/entry/{eid}/addCarbs")
@@ -132,13 +134,13 @@ public class BSLogController {
     }
 
     @PostMapping("/entry/{eid}/deleteCarbs")
-    public String deleteCarbs(Model model, @PathVariable("eid") Integer eid, @RequestParam(value="deleteMe", required = false) List<Integer> cids){
+    public String deleteCarbs(Model model, @PathVariable("eid") Integer eid, @RequestParam(value = "deleteMe", required = false) List<Integer> cids) {
         carbService.deleteCarbs(cids);
-        return "redirect:/entry/"+eid+"/addCarbs";
+        return "redirect:/entry/" + eid + "/addCarbs";
     }
 
     @PostMapping("/entry/{eid}/addCarbs")
-    public String carbToEntrySubmit(Model model, @PathVariable("eid") Integer eid, @RequestParam(value="deleteMe", required = false) List<Integer> cids, Carb carb) {
+    public String carbToEntrySubmit(Model model, @PathVariable("eid") Integer eid, @RequestParam(value = "deleteMe", required = false) List<Integer> cids, Carb carb) {
         Entry entry = entryService.findEntry(eid);
         carb.setEntry(entry);
         carbService.addCarb(carb);
@@ -181,23 +183,23 @@ public class BSLogController {
             }
         }
         carb.setServingSize(servingSize);
-        carb.setCarbsPerServing((int)Double.parseDouble(carbsPerServing));
+        carb.setCarbsPerServing((int) Double.parseDouble(carbsPerServing));
         model.addAttribute("carb", carb);
         model.addAttribute("eid", eid);
         return "enterServingFromGet";
     }
 
     @PostMapping("/entry/{eid}/enterCarbsFromSearch")
-    public String enterCarbFromSearch(Model model, @PathVariable("eid") Integer eid, Carb carb){
+    public String enterCarbFromSearch(Model model, @PathVariable("eid") Integer eid, Carb carb) {
         Entry entry = entryService.findEntry(eid);
         carb.setEntry(entry);
-        carb.setTotalCarbs(carb.getNumServings()*carb.getCarbsPerServing());
+        carb.setTotalCarbs(carb.getNumServings() * carb.getCarbsPerServing());
         carbService.addCarb(carb);
         return "redirect:/entry/" + eid + "/addCarbs";
     }
 
     @GetMapping("/profile")
-    public String profile(Model model){
+    public String profile(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userService.findByUsername(currentPrincipalName);
@@ -206,7 +208,7 @@ public class BSLogController {
     }
 
     @GetMapping("/editProfile")
-    public String editProfile(Model model){
+    public String editProfile(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userService.findByUsername(currentPrincipalName);
@@ -215,7 +217,7 @@ public class BSLogController {
     }
 
     @PostMapping("/editProfile")
-    public String editProfileSubmit(Model model, User user){
+    public String editProfileSubmit(Model model, User user) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User userInDb = userService.findByUsername(currentPrincipalName);
@@ -226,6 +228,26 @@ public class BSLogController {
         return "redirect:/profile";
     }
 
+    @PostMapping("/entry/{eid}/addInsulin")
+    public String getBolusSuggestionForEntry(Model model, @PathVariable("eid") Integer eid) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        Insulin insulin = insulinService.getBolus(currentPrincipalName, eid);
+        Entry entry = entryService.findEntry(eid);
+        model.addAttribute("entry", entry);
+        model.addAttribute("insulin", insulin);
+        return "addInsulin";
+    }
+
+    @PostMapping("/entry/{eid}/submitInsulin")
+    public String addInsulinToEntry(Model model, @PathVariable("eid") Integer eid, Insulin insulin) {
+        insulin.setEntry(entryService.findEntry(eid));
+        Entry entry = entryService.findEntry(eid);
+        Insulin insulinToAdd = insulinService.addInsulin(insulin,eid);
+        entry.setInsulin(insulinToAdd);
+        entryService.updateEntry(entry, eid);
+        return "redirect:/dash";
+    }
 
     @GetMapping("/login")
     public String login() {

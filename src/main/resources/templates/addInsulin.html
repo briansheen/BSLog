@@ -6,42 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>My BSLog</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css"
+          rel="stylesheet"/>
 </head>
 <body>
 <nav class="navbar navbar-default">
     <div class="navbar-header">
         <a class="btn" href="/dash"><i class="fa fa-home fa-fw" aria-hidden="true"></i>Home</a>
         <a class="btn" href="/profile"><i class="fa fa-user-o fa-fw" aria-hidden="true"></i>Profile</a>
-        <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/history.html"><input type="button" value="My History"/></a>
+        <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/history.html"><input type="button"
+                                                                                        value="My History"/></a>
         <a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/report.html"><input type="button" value="My Report"/></a>
         <a class="btn" href="/logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Logout</a>
     </div>
 </nav>
-<h1 class="text-center">Create a BSLog</h1>
-<form action="#" th:action="@{/addEntry}" th:object="${entry}" method="post">
+<form action="#" th:action="@{'/entry/'+${eid}+'/submitInsulin'}" th:object="${insulin}" method="post">
+    <h1 class="text-center">Add Insulin</h1>
+    <div style="width:200px" class="container mx-auto text-center"><h4>My Insulin Dose: <div class="input-group"><input type="text" class="form-control" th:field="*{bolus}" th:value="${insulin.getBolus()}" autofocus="autofocus"/><div class="input-group-addon"> units</div></div></h4></div>
     <div class="container mx-auto table-responsive" style="width: 450px;">
         <table class="table table-bordered table-hover">
             <tbody>
             <tr>
+                <td>Suggested Insulin Dose</td>
+                <td th:text="${insulin.getBolus()}"></td>
+            </tr>
+            <tr>
                 <td>Blood Sugar</td>
-                <td><div class="input-group"><input type="text" class="form-control" th:field="*{bloodsugar}"/> <div class="input-group-addon"> mg/dL</div></div></td>
+                <td th:text="${entry.getBloodsugar()}"> mg/dL</td>
             </tr>
             <tr>
-                <td>Time</td>
-                <td><input type="text" class="form-control" th:field="*{time}"/></td>
-            </tr>
-            <tr>
-                <td>Date</td>
-                <td><div class="input-group"><input type="text" class="form-control" th:field="*{date}"/> <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div></div></td>
+                <td>Total Carbs</td>
+                <td th:text="${entry.getTotalCarbs()}"> grams</td>
             </tr>
             </tbody>
         </table>
     </div>
     <br/>
-    <div class="text-center"><input type="submit" value="Continue"/> <a href="/dash"><input type="button" value="Cancel"/></a></div>
+    <div class="text-center">
+        <input class="btn btn-success" type="submit" value="Done"/>
+        <a th:href="'/viewEntry/'+${eid}"><input class="btn btn-default" type="button" value="Back"/></a></div>
 </form>
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"

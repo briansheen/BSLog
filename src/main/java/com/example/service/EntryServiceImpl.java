@@ -48,6 +48,7 @@ public class EntryServiceImpl implements EntryService {
         Entry entryInDb = entryRepository.findOne(eid);
         entryInDb.setBloodsugar(entry.getBloodsugar());
         entryInDb.setInsulin(entry.getInsulin());
+        entryInDb.setBolus(entry.getBolus());
         entryInDb.setDate(entry.getDate());
         entryInDb.setTime(entry.getTime());
         updateEntryTotCarbs(eid);

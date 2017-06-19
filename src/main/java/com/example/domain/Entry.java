@@ -22,6 +22,7 @@ public class Entry {
     private Integer totalCarbs;
     private List<Carb> carbs;
     private Insulin insulin;
+    private Double bolus;
 
     @NotNull
     private Integer bloodsugar;
@@ -96,6 +97,14 @@ public class Entry {
         this.totalCarbs = totalCarbs;
     }
 
+    public Double getBolus() {
+        return bolus;
+    }
+
+    public void setBolus(Double bolus) {
+        this.bolus = bolus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,6 +120,7 @@ public class Entry {
         return eid != null ? eid.hashCode() : 0;
     }
 
+
     @Override
     public String toString() {
         return "Entry{" +
@@ -121,6 +131,7 @@ public class Entry {
                 ", totalCarbs=" + totalCarbs +
                 ", carbs=" + carbs +
                 ", insulin=" + insulin +
+                ", bolus=" + bolus +
                 ", bloodsugar=" + bloodsugar +
                 '}';
     }

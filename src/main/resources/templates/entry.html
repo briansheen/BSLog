@@ -40,7 +40,7 @@
                 <td th:text="${entry.time}"></td>
                 <td th:text="${entry.bloodsugar}"></td>
                 <td th:text="${entry.totalCarbs}"></td>
-                <td th:text="${entry.insulin}"></td>
+                <td th:text="${entry.bolus}"></td>
             </tr>
             </tbody>
         </table>
@@ -78,8 +78,11 @@
 <div class="row">
     <div class="col-md-4 text-center"></div>
     <div class="col-md-4 text-center">
-        <a th:href="@{'/entry/'+${entry.eid}+'/addCarbs'}"><input class="btn btn-primary btn-info" type="button" value="Add/Edit Carbs"/></a>
-        <a href="/dash"><input class="btn btn-primary btn-success" type="button" value="Done"/></a>
+        <form action="#" th:action="@{'/entry/'+${entry.eid}+'/addInsulin'}" th:object="${entry}" method="post">
+            <a th:href="@{'/entry/'+${entry.eid}+'/addCarbs'}"><input class="btn btn-primary btn-info" type="button" value="Add/Edit Carbs"/></a>
+            <input class="btn btn-info" type="submit" value="Add/Edit Insulin"/>
+            <a href="/dash"><input class="btn btn-primary btn-success" type="button" value="Done"/></a>
+        </form>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"

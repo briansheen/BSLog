@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name="insulin")
 public class Insulin {
     private Integer iid;
-    private Double insulin;
+    private Double bolus;
     private Entry entry;
 
     @Id
@@ -23,12 +23,12 @@ public class Insulin {
         this.iid = iid;
     }
 
-    public Double getInsulin() {
-        return insulin;
+    public Double getBolus() {
+        return bolus;
     }
 
-    public void setInsulin(Double insulin) {
-        this.insulin = insulin;
+    public void setBolus(Double bolus) {
+        this.bolus = bolus;
     }
 
     @OneToOne
@@ -48,19 +48,19 @@ public class Insulin {
 
         Insulin insulin = (Insulin) o;
 
-        return iid.equals(insulin.iid);
+        return iid != null ? iid.equals(insulin.iid) : insulin.iid == null;
     }
 
     @Override
     public int hashCode() {
-        return iid.hashCode();
+        return iid != null ? iid.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "Insulin{" +
                 "iid=" + iid +
-                ", insulin=" + insulin +
+                ", bolus=" + bolus +
                 ", entry=" + (entry == null ? "" : entry.getEid()) +
                 '}';
     }

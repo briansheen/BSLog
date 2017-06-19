@@ -24,28 +24,28 @@
     <div class="col-md-4 col-md-offset-1">
         <h1 class="text-center">Enter Carbs Manually</h1>
         <form action="#" th:action="@{'/entry/'+${entry.eid}+'/addCarbs'}" th:object="${carb}" method="post">
-            <div class="container mx-auto" style="width: 400px;">
+            <div class="container mx-auto table-responsive" style="width: 400px;">
                 <table class="table table-bordered table-hover">
                     <tbody>
                         <tr>
                             <td>Name</td>
-                            <td><input type="text" th:field="*{name}" style="width: 200px;"/></td>
+                            <td><input type="text" class="form-control" th:field="*{name}"/></td>
                         </tr>
                         <tr>
                             <td>Serving Size</td>
-                            <td><input type="text" th:field="*{servingSize}" style="width: 200px;"/></td>
+                            <td><input type="text" class="form-control" th:field="*{servingSize}"/></td>
                         </tr>
                         <tr>
                             <td>Carbs Per Serving</td>
-                            <td><input type="text" th:field="*{carbsPerServing}" style="width: 100px;"/> grams</td>
+                            <td><div class="input-group"><input type="text" class="form-control" th:field="*{carbsPerServing}"/><div class="input-group-addon"> grams</div></div></td>
                         </tr>
                         <tr>
                             <td>Number Of Servings</td>
-                            <td><input type="text" th:field="*{numServings}" style="width: 200px;"/></td>
+                            <td><input type="text" class="form-control" th:field="*{numServings}"/></td>
                         </tr>
                         <tr>
                             <td>Total Carbs</td>
-                            <td><input type="text" th:field="*{totalCarbs}" style="width: 100px;"/> grams</td>
+                            <td><div class="input-group"><input type="text" class="form-control" th:field="*{totalCarbs}"/><div class="input-group-addon"> grams</div></div></td>
                         </tr>
                         <tr>
                             <td colspan="2" class="text-center"><input class="btn btn-warning" type="submit" value="Add Carb"/></td>
@@ -61,12 +61,12 @@
     <div class="col-md-4">
         <h1 class="text-center">Search Food Database</h1>
         <form action="#" th:action="@{'/entry/'+${entry.eid}+'/search'}" method="post">
-            <div class="container mx-auto" style="width: 500px;">
+            <div class="container mx-auto table-responsive" style="width: 500px;">
                 <table class="table table-bordered table-hover">
                     <tbody>
                     <tr>
                         <td>Food Description</td>
-                        <td><input type="text" name="query" style="width: 300px;"/></td>
+                        <td><input type="text" class="form-control" name="query"/></td>
                     </tr>
                     <tr>
                         <td colspan="2" class="text-center"><input class="btn btn-warning" type="submit" value="Search"/></td>
@@ -78,13 +78,16 @@
     </div>
 </div>
     <br/>
+<form action="#" th:action="@{'/entry/'+${entry.eid}+'/addInsulin'}" method="post">
     <div class="row">
         <div class="col-md-4 text-center"></div>
         <div class="col-md-4 text-center">
-            <a th:href="@{'/entry/'+${entry.eid}+'/addCarbs'}"><input class="btn btn-primary btn-info" type="button" value="Add Insulin"/></a>
+            <input class="btn btn-primary btn-info" type="submit" value="Add Insulin"/>
+            <a th:href="'/viewEntry/'+${entry.eid}"><input class="btn btn-default" type="button" value="Back"/></a>
             <a href="/dash"><input class="btn btn-primary btn-success" type="button" value="Done"/></a>
         </div>
     </div>
+</form>
 
 <br/>
 <form action="#" th:action="@{'/entry/'+${entry.eid}+'/deleteCarbs'}" method="post">
