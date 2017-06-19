@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestClientException;
 
 import javax.validation.Valid;
 import java.text.DateFormat;
@@ -34,9 +35,6 @@ import java.util.List;
 
 @Controller
 public class BSLogController {
-
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
     @Autowired
     UserService userService;
@@ -77,23 +75,19 @@ public class BSLogController {
 
     @GetMapping("/addEntry")
     public String addEntry(Model model) {
-        Entry entry = new Entry();
-        LocalDate ld = LocalDate.now();
-        LocalTime lt = LocalTime.now();
-        String date = ld.format(DATE_FORMATTER);
-        String time = lt.format(TIME_FORMATTER);
-        ld = LocalDate.parse(date, DATE_FORMATTER);
-        lt = LocalTime.parse(time, TIME_FORMATTER);
-        entry.setDate(ld);
-        entry.setTime(lt);
+        Entry entry = entryService.getNewEntry();
         model.addAttribute("entry", entry);
         return "addEntry";
     }
 
     @PostMapping("/addEntry")
-    public String entrySubmit(Model model, Entry entry) {
+    public String entrySubmit(Model model, @Valid Entry entry, BindingResult bindingResult) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("entry", entry);
+            return "addEntryError";
+        }
         entry.setUser(userService.findByUsername(currentPrincipalName));
         entryService.addEntry(entry);
         model.addAttribute("entry", entry);
@@ -118,7 +112,13 @@ public class BSLogController {
     }
 
     @PostMapping("/editEntry/{eid}")
-    public String editEntrySubmit(Model model, @PathVariable("eid") Integer eid, Entry entry) {
+    public String editEntrySubmit(Model model, @PathVariable("eid") Integer eid, @Valid Entry entry, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("insulin", entry.getInsulin());
+            model.addAttribute("entry", entry);
+            model.addAttribute("carbList", entry.getCarbs());
+            return "editEntryError";
+        }
         entryService.updateEntry(entry, eid);
         return "redirect:/viewEntry/" + eid;
     }
@@ -149,8 +149,15 @@ public class BSLogController {
 
     @PostMapping("/entry/{eid}/search")
     public String searchCarbToEntry(Model model, @PathVariable("eid") Integer eid, @RequestParam(value = "query", required = true) String query) {
-        NdbSearchResponse ndbSearchResponse = ndbService.search(query);
-        model.addAttribute("searchResponse", ndbSearchResponse);
+        try {
+            NdbSearchResponse ndbSearchResponse = ndbService.search(query);
+            model.addAttribute("searchResponse", ndbSearchResponse);
+        } catch (RestClientException e) {
+            model.addAttribute("query", query);
+            model.addAttribute("eid", eid);
+            return "searchError";
+        }
+        model.addAttribute("query", query);
         model.addAttribute("eid", eid);
         return "selectCarbFromSearch";
     }
@@ -193,7 +200,7 @@ public class BSLogController {
     public String enterCarbFromSearch(Model model, @PathVariable("eid") Integer eid, Carb carb) {
         Entry entry = entryService.findEntry(eid);
         carb.setEntry(entry);
-        carb.setTotalCarbs(carb.getNumServings() * carb.getCarbsPerServing());
+        carb.setTotalCarbs((int) (carb.getNumServings() * carb.getCarbsPerServing()));
         carbService.addCarb(carb);
         return "redirect:/entry/" + eid + "/addCarbs";
     }
@@ -232,10 +239,19 @@ public class BSLogController {
     public String getBolusSuggestionForEntry(Model model, @PathVariable("eid") Integer eid) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        Insulin insulin = insulinService.getBolus(currentPrincipalName, eid);
-        Entry entry = entryService.findEntry(eid);
-        model.addAttribute("entry", entry);
-        model.addAttribute("insulin", insulin);
+        try {
+            Insulin insulin = insulinService.getBolus(currentPrincipalName, eid);
+            Entry entry = entryService.findEntry(eid);
+            model.addAttribute("entry", entry);
+            model.addAttribute("insulin", insulin);
+        } catch(NullPointerException e){
+            Entry entry = entryService.findEntry(eid);
+            model.addAttribute("carbList", carbService.findAllByEntry(entry));
+            Carb carb = new Carb();
+            model.addAttribute("entry", entry);
+            model.addAttribute("carb", carb);
+            return "addInsulinError";
+        }
         return "addInsulin";
     }
 
@@ -243,7 +259,7 @@ public class BSLogController {
     public String addInsulinToEntry(Model model, @PathVariable("eid") Integer eid, Insulin insulin) {
         insulin.setEntry(entryService.findEntry(eid));
         Entry entry = entryService.findEntry(eid);
-        Insulin insulinToAdd = insulinService.addInsulin(insulin,eid);
+        Insulin insulinToAdd = insulinService.addInsulin(insulin, eid);
         entry.setInsulin(insulinToAdd);
         entryService.updateEntry(entry, eid);
         return "redirect:/dash";

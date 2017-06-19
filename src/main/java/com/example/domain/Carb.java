@@ -13,7 +13,7 @@ public class Carb {
     private String name;
     private String servingSize;
     private Integer carbsPerServing;
-    private Integer numServings;
+    private Double numServings;
     private Integer totalCarbs;
     private Entry entry; //for the entry entry_id
 
@@ -51,11 +51,11 @@ public class Carb {
         this.carbsPerServing = carbsPerServing;
     }
 
-    public Integer getNumServings() {
+    public Double getNumServings() {
         return numServings;
     }
 
-    public void setNumServings(Integer numServings) {
+    public void setNumServings(Double numServings) {
         this.numServings = numServings;
     }
 

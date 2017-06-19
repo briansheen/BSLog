@@ -24,4 +24,6 @@ public interface EntryService {
 
     public Entry updateEntryTotCarbs(Integer eid);
 
+    public Entry getNewEntry();
+
 }

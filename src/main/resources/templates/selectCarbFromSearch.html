@@ -23,7 +23,7 @@
 
 <h1 class="display-3 text-center">Select from Food Database</h1>
 <form action="#" th:action="@{'/entry/'+${eid}+'/addCarbsFromSearch'}" th:object="${searchResponse}" method="post">
-    <div class="container mx-auto" style="width: 900px;">
+    <div class="container mx-auto table-responsive" style="width: 900px;">
         <table class="table table-bordered table-hover">
             <thead class="thead-inverse">
             <tr>

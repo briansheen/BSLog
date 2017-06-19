@@ -27,25 +27,16 @@
     <div class="container mx-auto" style="width: 400px;">
         <table class="table">
             <thead>
-            <tr>
-                <th class="text-center"><i class="fa fa-tint fa-2x" aria-hidden="true"></i> / <i class="fa fa-cutlery fa-2x" aria-hidden="true"></i></th>
-                <th class="text-center"><i class="fa fa-plus-square fa-2x" aria-hidden="true"></i></th>
-            </tr>
+            <a class="btn btn-lg btn-success" href="/addEntry">
+                <i class="fa fa-tint fa-2x pull-left fa-fw"></i> Add Bloodsugar <br/>Entry</a>
+
             </thead>
-            <tbody>
-            <tr>
-                <td><a href="/addEntry"><input type="button" value="Add Entry"/></a></td>
-                <td><a href="/Users/bsheen/IdeaProjects/FinalProject/wireframe/getbolus.html"><input type="button" value="Get Insulin Bolus"/></a></td>
-            </tr>
-            </tbody>
         </table>
     </div>
 </div>
 <br/>
 <div class="text-center">
     <h2>My Daily Summary: <span th:text="${date}"></span></h2>
-    <h3>My Estimated HbA1c: 7.2</h3>
-    <br/>
     <form action="#" th:action="@{/dash}" th:object="${entryList}" method="post">
         <div class="container mx-auto" style="width: 700px;">
             <table class="table table-bordered table-hover">

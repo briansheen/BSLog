@@ -18,7 +18,7 @@ public class Entry {
     private Integer eid;
     private LocalDate date;
     private LocalTime time;
-    private User user; //for the user username
+    private User user;
     private Integer totalCarbs;
     private List<Carb> carbs;
     private Insulin insulin;

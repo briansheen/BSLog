@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +22,27 @@ import java.util.List;
 @Service
 public class EntryServiceImpl implements EntryService {
 
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
+
+
     @Autowired
     EntryRepository entryRepository;
+
+    @Override
+    @Transactional(readOnly = true)
+    public Entry getNewEntry() {
+        Entry entry = new Entry();
+        LocalDate ld = LocalDate.now();
+        LocalTime lt = LocalTime.now();
+        String date = ld.format(DATE_FORMATTER);
+        String time = lt.format(TIME_FORMATTER);
+        ld = LocalDate.parse(date, DATE_FORMATTER);
+        lt = LocalTime.parse(time, TIME_FORMATTER);
+        entry.setDate(ld);
+        entry.setTime(lt);
+        return entry;
+    }
 
     @Override
     @Transactional(readOnly = true)

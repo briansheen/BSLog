@@ -34,7 +34,7 @@ CREATE TABLE `carb` (
   `name` varchar(256) DEFAULT NULL,
   `serving_size` varchar(30) DEFAULT NULL,
   `carbs_per_serving` int(11) DEFAULT NULL,
-  `num_servings` int(11) DEFAULT NULL,
+  `num_servings` double DEFAULT NULL,
   `total_carbs` int(11) DEFAULT NULL,
   `entry_id` int(11) NOT NULL,
   PRIMARY KEY (`cid`),

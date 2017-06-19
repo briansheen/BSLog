@@ -22,20 +22,28 @@
 </nav>
 <h1 class="text-center">Create a BSLog</h1>
 <form action="#" th:action="@{/addEntry}" th:object="${entry}" method="post">
-    <div class="container mx-auto table-responsive" style="width: 450px;">
+    <div class="container mx-auto table-responsive" style="width: 550px;">
         <table class="table table-bordered table-hover">
             <tbody>
             <tr>
                 <td>Blood Sugar</td>
                 <td><div class="input-group"><input type="text" class="form-control" th:field="*{bloodsugar}"/> <div class="input-group-addon"> mg/dL</div></div></td>
+                <td th:if="${#fields.hasErrors('bloodsugar')}" class="alert alert-warning"
+                    role="alert">
+                    Whole Number Required
+                </td>
             </tr>
             <tr>
                 <td>Time (hh:mm AM/PM)</td>
                 <td><input type="text" class="form-control" th:field="*{time}"/></td>
+                <td th:if="${#fields.hasErrors('time')}" class="alert alert-warning"
+                       role="alert">Time Format must be <br/>HH:MM AM/PM</td>
             </tr>
             <tr>
                 <td>Date (mm/dd/yy)</td>
                 <td><div class="input-group"><input type="text" class="form-control" th:field="*{date}"/> <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div></div></td>
+                <td th:if="${#fields.hasErrors('date')}" class="alert alert-warning"
+                   role="alert">Date Format must be <br/>mm/dd/yy</td>
             </tr>
             </tbody>
         </table>

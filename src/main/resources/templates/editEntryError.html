@@ -46,6 +46,16 @@
                     <td><div class="input-group"><input type="text" class="form-control" th:field="*{totalCarbs}" th:value="${entry.totalCarbs}" readonly="readonly"/><div class="input-group-addon"> grams</div></div></td>
                     <td><div class="input-group"><input type="text" class="form-control" th:field="*{bolus}" th:value="${entry.bolus}" readonly="readonly"/><div class="input-group-addon"> units</div></div></td>
                 </tr>
+                <tr>
+                    <td><p th:if="${#fields.hasErrors('date')}" class="alert alert-warning"
+                           role="alert">Date Format must be <br/>mm/dd/yy</p></td>
+                    <td><p th:if="${#fields.hasErrors('time')}" class="alert alert-warning"
+                           role="alert">Time Format must be <br/>HH:MM AM/PM </p></td>
+                    <td><p th:if="${#fields.hasErrors('bloodsugar')}" class="alert alert-warning"
+                           role="alert">Whole Number Required</p></td>
+                    <td></td>
+                    <td></td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -58,29 +68,29 @@
         </div>
     </div>
 </form>
-    <h1 class="text-center">Carbohydrates in Entry</h1>
-    <div class="container mx-auto table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead>
-            <tr>
-                <th class="text-center">Name</th>
-                <th class="text-center">Serving Size</th>
-                <th class="text-center">Carbs Per Serving</th>
-                <th class="text-center">Number Of Servings</th>
-                <th class="text-center">Total Carbs</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="carb : ${carbList}">
-                <td th:text="${carb.name}"></td>
-                <td th:text="${carb.servingSize}"></td>
-                <td th:text="${carb.carbsPerServing}"></td>
-                <td th:text="${carb.numServings}"></td>
-                <td th:text="${carb.totalCarbs}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+<h1 class="text-center">Carbohydrates in Entry</h1>
+<div class="container mx-auto table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th class="text-center">Name</th>
+            <th class="text-center">Serving Size</th>
+            <th class="text-center">Carbs Per Serving</th>
+            <th class="text-center">Number Of Servings</th>
+            <th class="text-center">Total Carbs</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="carb : ${carbList}">
+            <td th:text="${carb.name}"></td>
+            <td th:text="${carb.servingSize}"></td>
+            <td th:text="${carb.carbsPerServing}"></td>
+            <td th:text="${carb.numServings}"></td>
+            <td th:text="${carb.totalCarbs}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
         crossorigin="anonymous"></script>
