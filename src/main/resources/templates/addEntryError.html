@@ -29,7 +29,7 @@
                 <td><div class="input-group"><input type="text" class="form-control" th:field="*{bloodsugar}"/> <div class="input-group-addon"> mg/dL</div></div></td>
                 <td th:if="${#fields.hasErrors('bloodsugar')}" class="alert alert-warning"
                     role="alert">
-                    Whole Number Required
+                    Positive Whole Number Required
                 </td>
             </tr>
             <tr>

@@ -1,6 +1,7 @@
 package com.example.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ public class Entry {
     private Double bolus;
 
     @NotNull
+    @Min(1)
     private Integer bloodsugar;
 
     @Id
