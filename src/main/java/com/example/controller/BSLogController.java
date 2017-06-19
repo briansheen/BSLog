@@ -135,12 +135,12 @@ public class BSLogController {
 
     @PostMapping("/entry/{eid}/deleteCarbs")
     public String deleteCarbs(Model model, @PathVariable("eid") Integer eid, @RequestParam(value = "deleteMe", required = false) List<Integer> cids) {
-        carbService.deleteCarbs(cids);
+        carbService.deleteCarbs(cids, eid);
         return "redirect:/entry/" + eid + "/addCarbs";
     }
 
     @PostMapping("/entry/{eid}/addCarbs")
-    public String carbToEntrySubmit(Model model, @PathVariable("eid") Integer eid, @RequestParam(value = "deleteMe", required = false) List<Integer> cids, Carb carb) {
+    public String carbToEntrySubmit(Model model, @PathVariable("eid") Integer eid, Carb carb) {
         Entry entry = entryService.findEntry(eid);
         carb.setEntry(entry);
         carbService.addCarb(carb);
@@ -240,6 +240,7 @@ public class BSLogController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         try {
+            carbService.updateCarbsInEntry(eid);
             Insulin insulin = insulinService.getBolus(currentPrincipalName, eid);
             Entry entry = entryService.findEntry(eid);
             model.addAttribute("entry", entry);
@@ -263,6 +264,20 @@ public class BSLogController {
         entry.setInsulin(insulinToAdd);
         entryService.updateEntry(entry, eid);
         return "redirect:/dash";
+    }
+
+    @GetMapping("/history")
+    public String showHistory(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        model.addAttribute("entryList",userService.findAllEntriesByUser(currentPrincipalName));
+        return "history";
+    }
+
+    @PostMapping("/history")
+    public String deleteFromHistory(Model model, @RequestParam(value = "deleteMe", required = false) List<Integer> eids){
+        entryService.deleteEntries(eids);
+        return "redirect:/history";
     }
 
     @GetMapping("/login")

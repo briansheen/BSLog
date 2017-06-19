@@ -60,8 +60,12 @@ public class InsulinServiceImpl implements InsulinService {
                 bolus = Double.valueOf(df.format(bolus));
             }
         }
-        if (bolus > (double) 0) {
-            insulin.setBolus(bolus);
+        if(bolus!=null){
+            if (bolus > (double) 0) {
+                insulin.setBolus(bolus);
+            } else {
+                insulin.setBolus((double)0);
+            }
         } else {
             insulin.setBolus((double) 0);
         }

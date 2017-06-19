@@ -18,5 +18,7 @@ public interface CarbService {
 
     public void deleteCarb(Integer cid);
 
-    public void deleteCarbs(List<Integer> cids);
+    public void deleteCarbs(List<Integer> cids, Integer eid);
+
+    public void updateCarbsInEntry(Integer eid);
 }
