@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.transaction.TransactionScoped;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 import java.time.LocalDateTime;
@@ -99,7 +100,7 @@ public class UserServiceImpl implements UserService{
         List<Entry> entries = findAllEntriesByUser(username);
         if(entries != null) {
             for (Entry entry : entries) {
-                if (entry.getDate().equals(LocalDate.now())) {
+                if (entry.getDate().equals(LocalDate.now(ZoneId.of("America/Chicago")))) {
                     todaysEntries.add(entry);
                 }
             }
