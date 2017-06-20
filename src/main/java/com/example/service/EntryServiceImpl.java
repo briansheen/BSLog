@@ -34,8 +34,8 @@ public class EntryServiceImpl implements EntryService {
     @Transactional(readOnly = true)
     public Entry getNewEntry() {
         Entry entry = new Entry();
-        LocalDate ld = LocalDate.now(ZoneId.systemDefault());
-        LocalTime lt = LocalTime.now(ZoneId.systemDefault());
+        LocalDate ld = LocalDate.now(ZoneId.of("America/Chicago"));
+        LocalTime lt = LocalTime.now(ZoneId.of("America/Chicago"));
         String date = ld.format(DATE_FORMATTER);
         String time = lt.format(TIME_FORMATTER);
         ld = LocalDate.parse(date, DATE_FORMATTER);
