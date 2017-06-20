@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
@@ -59,9 +60,9 @@ public class BSLogController {
         if (userService.findByUsername(currentPrincipalName) == null) {
             userService.addUser(currentPrincipalName);
         }
-
-        Date today = new Date();
-        model.addAttribute("date", SimpleDateFormat.getDateInstance(DateFormat.MEDIUM).format(today));
+        LocalDate ld = LocalDate.now(ZoneId.of("America/Chicago"));
+        Date date = Date.from(ld.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        model.addAttribute("date", SimpleDateFormat.getDateInstance(DateFormat.MEDIUM).format(date));
         model.addAttribute("entryList", userService.getEntriesByUserToday(currentPrincipalName));
 
         return "dash";
