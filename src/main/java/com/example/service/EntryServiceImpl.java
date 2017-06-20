@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,8 @@ public class EntryServiceImpl implements EntryService {
     @Transactional(readOnly = true)
     public Entry getNewEntry() {
         Entry entry = new Entry();
-        LocalDate ld = LocalDate.now();
-        LocalTime lt = LocalTime.now();
+        LocalDate ld = LocalDate.now(ZoneId.systemDefault());
+        LocalTime lt = LocalTime.now(ZoneId.systemDefault());
         String date = ld.format(DATE_FORMATTER);
         String time = lt.format(TIME_FORMATTER);
         ld = LocalDate.parse(date, DATE_FORMATTER);
